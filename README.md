@@ -1,1 +1,1 @@
-![image](https://github.com/mnkkhan/epic-cinema/assets/37503821/4ab2327f-3a65-4189-8fb4-e357d5482b55)
+![image](https://github.com/mnkkhan/epic-cinema/assets/37503821/2aa0e040-6ca3-4026-aad6-4fda2fcc43b5)
