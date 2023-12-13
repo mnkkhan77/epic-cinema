@@ -26,6 +26,7 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./Genre";
 import Years from "./Years";
+import Hero from "./Hero";
 
 const drawerWidth = 320;
 
@@ -211,6 +212,7 @@ export default function Navbar() {
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
+        <Hero />
       </Main>
     </Box>
   );
