@@ -24,8 +24,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
 import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
-import Genre from "./Genre";
-import Years from "./Years";
+import Genre from "./components/Genre";
+import Years from "./components/Years";
 import Hero from "./Hero";
 
 const drawerWidth = 320;
@@ -130,7 +130,7 @@ export default function Navbar() {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon style={{ color: "#aaa" }} />
             ) : (
               <ChevronRightIcon />
             )}

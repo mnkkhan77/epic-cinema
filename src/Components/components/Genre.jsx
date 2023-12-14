@@ -6,9 +6,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import yearsData from "../DataProvider/years.json";
+import genresData from "../../DataProvider/genre.json";
 
-const Years = () => {
+const Genre = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleToggle = () => {
@@ -20,9 +20,13 @@ const Years = () => {
       <ListItem disablePadding onClick={handleToggle}>
         <ListItemButton>
           <ListItemIcon>
-            {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            {open ? (
+              <ExpandLessIcon sx={{ color: "#aaa" }} />
+            ) : (
+              <ExpandMoreIcon sx={{ color: "#aaa" }} />
+            )}
           </ListItemIcon>
-          <ListItemText primary="Years" />
+          <ListItemText primary="Genre" />
         </ListItemButton>
       </ListItem>
       {open && (
@@ -35,7 +39,7 @@ const Years = () => {
           }}
         >
           {/* Render genres dynamically from the JSON data */}
-          {yearsData.map(({ id, year }) => (
+          {genresData.map(({ id, name }) => (
             <ListItem
               key={id}
               disablePadding
@@ -46,10 +50,8 @@ const Years = () => {
               }}
             >
               <ListItemButton>
-                <ListItemIcon sx={{ color: "#aaa" }}>
-                  {/* Add icon if needed */}
-                </ListItemIcon>
-                <ListItemText primary={year} />
+                <ListItemIcon sx={{ color: "#aaa" }} />
+                <ListItemText primary={name} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -59,4 +61,4 @@ const Years = () => {
   );
 };
 
-export default Years;
+export default Genre;

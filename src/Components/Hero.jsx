@@ -1,27 +1,25 @@
 import MovieListProvider from "./Provider/MovieListProvider";
-import CardComponents from "./components/CardComponents";
+import CardComponents from "./CardComponents";
+
+const IMG_API = process.env.REACT_APP_IMG_API;
 
 export default function Hero() {
   return (
     <MovieListProvider
-      render={({ movie, videos, images, credits, isError }) => (
+      render={({ movies, isError }) => (
         <div>
-          <CardComponents />
           {isError && <div>Error Occurred</div>}
-          {!isError && movie && (
-            <>
-              <div>{movie.title}</div>
-
-              <div>{movie.poster_path}</div>
-
-              {/* Render other details using videos, images, and credits */}
-              {videos.map((video) => (
-                <div key={video.id}>
-                  <p>{video.name}</p>
-                  {/* Render other properties of the video */}
-                </div>
+          {!isError && movies && (
+            <div style={{ display: "flex", gap: 16 }}>
+              {movies.map((movie) => (
+                <CardComponents
+                  key={movie.id}
+                  title={movie.title || movie.name}
+                  description={movie.overview}
+                  imageUrl={`${IMG_API}${movie.backdrop_path}`}
+                />
               ))}
-            </>
+            </div>
           )}
         </div>
       )}
