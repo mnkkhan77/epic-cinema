@@ -201,7 +201,7 @@ export default function Navbar() {
             </IconButton>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Link to="/sign_in">
+            <Link to="/log_in">
               <Button
                 color="inherit"
                 startIcon={<PersonIcon />}
