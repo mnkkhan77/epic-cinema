@@ -25,8 +25,12 @@ const Footer = () => {
           Terms of Service
         </Link>{" "}
         -{" "}
-        <Link to="/" style={linkStyle}>
+        <Link to="/contact" style={linkStyle}>
           Contact
+        </Link>{" "}
+        -{" "}
+        <Link to="/about" style={linkStyle}>
+          About
         </Link>
       </div>
     </footer>

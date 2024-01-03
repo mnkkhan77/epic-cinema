@@ -33,7 +33,7 @@ const CardComponents = ({
           width="100%"
           style={{ objectFit: "cover" }}
           image={imageUrl}
-          // alt={title}
+          alt={title}
         />
       )}
       <CardContent

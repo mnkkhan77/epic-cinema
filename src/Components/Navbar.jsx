@@ -27,6 +27,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
 import Hero from "./Hero";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 320;
 
@@ -200,13 +201,15 @@ export default function Navbar() {
             </IconButton>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Button
-              color="inherit"
-              startIcon={<PersonIcon />}
-              sx={{ color: "#aaa" }}
-            >
-              Login
-            </Button>
+            <Link to="/sign_in">
+              <Button
+                color="inherit"
+                startIcon={<PersonIcon />}
+                sx={{ color: "#aaa" }}
+              >
+                Login
+              </Button>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>

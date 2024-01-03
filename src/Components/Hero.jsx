@@ -7,7 +7,7 @@ export default function Hero() {
   return (
     <MovieListProvider
       render={({ movies, isError }) => (
-        <div>
+        <div style={{ width: "100%" }}>
           {isError && <div>Error Occurred</div>}
           {!isError && movies && (
             <div style={{ display: "flex", gap: 16 }}>
