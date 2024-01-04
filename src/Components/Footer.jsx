@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 const linkStyle = {
@@ -21,7 +20,7 @@ const Footer = () => {
     <footer style={footerStyle}>
       <p>&copy; 2023 Epic Cinema</p>
       <div>
-        <Link to="/" style={linkStyle}>
+        <Link to="/terms-of-service" style={linkStyle}>
           Terms of Service
         </Link>{" "}
         -{" "}
