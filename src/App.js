@@ -8,6 +8,7 @@ import About from "./Pages/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContactForm from "./Components/ContactForm";
 import SignUp from "./Pages/SignUp";
+import TermsOfService from "./Pages/TermsOfService";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/contact" element={<About />} />
       <Route path="/log_in" element={<SignInSide />} />
       <Route path="/sign_up" element={<SignUp />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
     </Routes>
 
     // <div className="App">
