@@ -8,7 +8,7 @@ import About from "./Pages/About";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContactForm from "./Components/ContactForm";
 import SignUp from "./Pages/SignUp";
-import TermsOfService from "./Pages/TermsOfService";
+import TermsOfService from "./Pages/TermsOfServices";
 
 function App() {
   return (

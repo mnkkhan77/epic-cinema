@@ -1,4 +1,4 @@
-const TermsAndServices = () => {
+const TermsOfServices = () => {
   const styles = {
     container: {
       width: "80%",
@@ -64,4 +64,4 @@ const TermsAndServices = () => {
   );
 };
 
-export default TermsAndServices;
+export default TermsOfServices;
