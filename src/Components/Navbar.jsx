@@ -103,14 +103,16 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ color: "#aaa" }}
-          >
-            Epic Cinema
-          </Typography>
+          <Link to="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ color: "#aaa" }}
+            >
+              Epic Cinema
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -176,14 +178,16 @@ export default function Navbar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: "#aaa" }}
-            >
-              Epic Cinema
-            </Typography>
+            <Link to="/">
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ color: "#aaa" }}
+              >
+                Epic Cinema
+              </Typography>
+            </Link>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", width: "60%" }}>
             <InputBase
