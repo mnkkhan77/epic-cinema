@@ -54,14 +54,6 @@ const About = () => {
         keeping you updated with the latest releases, and creating a community
         where movie lovers can connect and share their passion.
       </StyledParagraph>
-      <StyledSubheading>Contact Us</StyledSubheading>
-      <StyledParagraph>
-        Have questions or suggestions? Feel free to reach out to us at{" "}
-        <StyledLink href="mailto:info@epiccinema.com">
-          info@epiccinema.com
-        </StyledLink>
-        .
-      </StyledParagraph>
       <ContactForm />
     </StyledAboutContainer>
   );

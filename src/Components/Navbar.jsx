@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -28,6 +27,7 @@ import Genre from "./components/Genre";
 import Years from "./components/Years";
 import Hero from "./Hero";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const drawerWidth = 320;
 
@@ -73,13 +73,14 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
+  // ...theme.mixins.toolbar,
   justifyContent: "flex-end",
+  border: "1px solid red",
 }));
 
 export default function Navbar() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,14 +104,21 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ color: "#aaa" }}
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+            }}
           >
-            Epic Cinema
-          </Typography>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ color: "#aaa" }}
+            >
+              Epic Cinema
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -176,14 +184,21 @@ export default function Navbar() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: "#aaa" }}
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+              }}
             >
-              Epic Cinema
-            </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ color: "#aaa" }}
+              >
+                Epic Cinema
+              </Typography>
+            </Link>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", width: "60%" }}>
             <InputBase
@@ -215,7 +230,7 @@ export default function Navbar() {
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
-        <Hero />
+        {/* <Hero /> */}
       </Main>
     </Box>
   );

@@ -1,109 +1,85 @@
 import { useState } from "react";
-import { styled } from "@mui/system";
+import { TextField, Button, Typography, Box } from "@mui/material";
 
-const StyledFormContainer = styled("div")(({ theme }) => ({
-  maxWidth: "600px",
-  margin: "auto",
-  padding: "20px",
-  textAlign: "center",
-  // backgroundColor: theme.colors.background,
-  // color: theme.colors.text,
-  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "8px",
-}));
-
-const StyledForm = styled("form")({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-});
-
-const StyledLabel = styled("label")({
-  margin: "10px 0",
-});
-
-const StyledInput = styled("input")({
-  width: "100%",
-  padding: "10px",
-  margin: "5px 0",
-  borderRadius: "5px",
-  border: "1px solid #ccc",
-});
-
-const StyledTextArea = styled("textarea")({
-  width: "100%",
-  padding: "10px",
-  margin: "5px 0",
-  borderRadius: "5px",
-  border: "1px solid #ccc",
-  resize: "vertical",
-});
-
-const StyledButton = styled("button")(({ theme }) => ({
-  padding: "10px",
-  margin: "10px 0",
-  borderRadius: "5px",
-  border: "none",
-  // backgroundColor: theme.colors.primary,
-  color: "#fff",
-  cursor: "pointer",
-}));
-
-const ContactForm = () => {
-  //   const theme = useThemeContext();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+export default function ContactForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here (e.g., send data to server)
-    console.log("Form submitted:", formData);
+    //
   };
 
   return (
-    // <StyledFormContainer theme={theme}>
-    <StyledFormContainer>
-      <h2>Contact Us</h2>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledLabel>
-          Name:
-          <StyledInput
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          maxWidth: 600,
+          mx: "auto",
+          p: 2,
+          border: "2px solid  #000000",
+          borderRadius: "12px",
+          boxShadow: 1,
+        }}
+      >
+        <Typography variant="h4" align="center" mb={2}>
+          Contact Us
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            fullWidth
+            label="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            margin="normal"
+            required
           />
-        </StyledLabel>
-        <StyledLabel>
-          Email:
-          <StyledInput
+          <TextField
+            fullWidth
+            label="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            margin="normal"
+            required
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
           />
-        </StyledLabel>
-        <StyledLabel>
-          Message:
-          <StyledTextArea
-            rows="4"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
+          <TextField
+            fullWidth
+            label="Message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            margin="normal"
+            required
+            multiline
+            rows={4}
           />
-        </StyledLabel>
-        <StyledButton type="submit">Submit</StyledButton>
-      </StyledForm>
-    </StyledFormContainer>
+          <Button
+            fullWidth
+            type="submit"
+            sx={{
+              mt: 2,
+              backgroundColor: "#000",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "#111",
+              },
+            }}
+          >
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </Box>
   );
-};
-
-export default ContactForm;
+}

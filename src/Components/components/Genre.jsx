@@ -1,4 +1,3 @@
-import * as React from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -7,12 +6,19 @@ import ListItemText from "@mui/material/ListItemText";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import genresData from "../../DataProvider/genre.json";
+import { useState } from "react";
 
 const Genre = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleToggle = () => {
     setOpen(!open);
+  };
+
+  const handleGenreClick = (id) => {
+    // Handle the click event for each genre
+    console.log(`Genre clicked with id: ${id}`);
+    // Add your logic here
   };
 
   return (
@@ -48,6 +54,7 @@ const Genre = () => {
                 fontSize: "12px",
                 marginRight: "3px",
               }}
+              onClick={() => handleGenreClick(id)}
             >
               <ListItemButton>
                 <ListItemIcon sx={{ color: "#aaa" }} />

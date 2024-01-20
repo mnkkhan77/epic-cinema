@@ -18,7 +18,18 @@ const Footer = () => {
 
   return (
     <footer style={footerStyle}>
-      <p>&copy; 2023 Epic Cinema</p>
+      <p>
+        &copy; 2023{" "}
+        <Link
+          to="/"
+          style={{
+            color: "#fff",
+            textDecoration: "none",
+          }}
+        >
+          Epic Cinema
+        </Link>
+      </p>
       <div>
         <Link to="/terms-of-service" style={linkStyle}>
           Terms of Service
