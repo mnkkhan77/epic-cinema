@@ -25,7 +25,6 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
-import Hero from "./Hero";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 

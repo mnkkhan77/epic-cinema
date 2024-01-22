@@ -1,10 +1,12 @@
 import React from "react";
+import { styled } from "@mui/system";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
 
 const CardComponents = ({
   title,
@@ -17,6 +19,20 @@ const CardComponents = ({
   const truncatedDescription =
     description.length > 170 ? `${description.slice(0, 170)}...` : description;
 
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const HoverCardMedia = styled(CardMedia)({
+    position: "relative",
+    overflow: "hidden",
+    cursor: "pointer",
+    transition: "filter 0.3s",
+    "&:hover": {
+      "& img": {
+        filter: "brightness(40%)", // Apply filter only to the image
+      },
+    },
+  });
+
   return (
     <Card
       sx={{
@@ -24,17 +40,35 @@ const CardComponents = ({
         height: 400,
         display: "flex",
         flexDirection: "column",
+        overflow: "visible",
       }}
     >
       {imageUrl && (
-        <CardMedia
-          component="img"
+        <HoverCardMedia
+          component="div"
           height="200"
           width="100%"
-          style={{ objectFit: "cover" }}
-          image={imageUrl}
-          alt={title}
-        />
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <img
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            src={imageUrl}
+            alt={title}
+          />
+          {isHovered && (
+            <PlayCircleFilledWhiteRoundedIcon
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                color: "#fff",
+                fontSize: "60px",
+              }}
+            />
+          )}
+        </HoverCardMedia>
       )}
       <CardContent
         sx={{
@@ -65,8 +99,20 @@ const CardComponents = ({
         </div>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button
+          size="small"
+          color="success"
+          variant="contained"
+          // startIcon={<DownloadIcon />}
+        >
+          Download
+        </Button>
+        <Button size="small" variant="contained">
+          Share
+        </Button>
+        <Button size="small" variant="contained">
+          Read More ...
+        </Button>
       </CardActions>
     </Card>
   );
