@@ -1,42 +1,74 @@
 import MovieListProvider from "./Provider/MovieListProvider";
+import TvListProvider from "./Provider/TvListProvider";
 import CardComponents from "./CardComponents";
-
-import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useState } from "react";
 
 const IMG_API = process.env.REACT_APP_IMG_API;
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-}));
+const commonStyles = {
+  width: "100%",
+  paddingLeft: "30px",
+  paddingTop: "20px",
+};
 
-export default function Hero() {
+const ListComponent = ({ data, isError }) => (
+  <div style={commonStyles}>
+    {isError && <div>Error Occurred</div>}
+    {!isError && data && (
+      <div style={{ display: "flex", gap: 16 }}>
+        {data.map((item) => (
+          <CardComponents
+            key={item.id}
+            title={item.title || item.name}
+            description={item.overview}
+            imageUrl={`${IMG_API}${item.backdrop_path}`}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+);
+
+const Hero = () => {
+  const [alignment, setAlignment] = useState("Movies");
+
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
   return (
     <>
-      <DrawerHeader />
+      <div>
+        <Typography variant="h5" style={{ paddingTop: "20px" }}>
+          Trending
+        </Typography>
+        <ToggleButtonGroup
+          color="primary"
+          value={alignment}
+          exclusive
+          onChange={handleChange}
+          aria-label="Platform"
+        >
+          <ToggleButton value="Movies">Movies</ToggleButton>
+          <ToggleButton value="Tv">Tv</ToggleButton>
+        </ToggleButtonGroup>
+      </div>
       <MovieListProvider
-        render={({ movies, isError }) => (
-          <div
-            style={{ width: "700%", borderStyle: "solid", borderColor: "red" }}
-          >
-            {isError && <div>Error Occurred</div>}
-            {!isError && movies && (
-              <div style={{ display: "flex", gap: 16 }}>
-                {movies.map((movie) => (
-                  <CardComponents
-                    key={movie.id}
-                    title={movie.title || movie.name}
-                    description={movie.overview}
-                    imageUrl={`${IMG_API}${movie.backdrop_path}`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        render={({ trending, isError }) =>
+          alignment === "Movies" && (
+            <ListComponent data={trending} isError={isError} />
+          )
+        }
+      />
+      <TvListProvider
+        render={({ tv, isError }) =>
+          alignment === "Tv" && <ListComponent data={tv} isError={isError} />
+        }
       />
     </>
   );
-}
+};
+
+export default Hero;

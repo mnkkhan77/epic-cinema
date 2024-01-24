@@ -3,6 +3,7 @@ import axios from "axios";
 
 const GenreListProvider = () => {
   const [genres, setGenres] = useState([]);
+  const bearer_token = process.env.React_APP_BEARER_TOKEN;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -10,8 +11,7 @@ const GenreListProvider = () => {
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNDBkZmZiMjJhZDlhZTNlY2JhNDE3ZWE0ZDNkODUzYyIsInN1YiI6IjY0ZmU5OWNhZmZjOWRlMGVlMDBjN2JkMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.I72akWLKOMrv3hkMP-wxYcpCPpVes0OnaKTKfuI0Tls",
+          Authorization: bearer_token,
         },
       };
 

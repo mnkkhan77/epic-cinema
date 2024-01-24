@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const MovieListProvider = ({ render }) => {
+const TrendingListProvider = ({ render }) => {
   const API_KEY = process.env.REACT_APP_API_KEY;
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  const url = `${BASE_URL}/3/trending/all/day?api_key=${API_KEY}`;
+  const url_movie = `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}`;
 
-  const [trending, setTrending] = useState([]);
+  const [movie, setMovie] = useState([]);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
@@ -15,8 +15,8 @@ const MovieListProvider = ({ render }) => {
       setIsError(false);
 
       try {
-        const result = await axios(url);
-        setTrending(result.data.results);
+        const result = await axios(url_movie);
+        setMovie(result.data.results);
       } catch (error) {
         setIsError(true);
         console.error("Error fetching data:", error);
@@ -28,9 +28,9 @@ const MovieListProvider = ({ render }) => {
     return () => {
       // Cleanup logic if needed
     };
-  }, [url]);
+  }, [url_movie]);
 
-  return render({ trending, isError });
+  return render({ movie, isError });
 };
 
-export default MovieListProvider;
+export default TrendingListProvider;

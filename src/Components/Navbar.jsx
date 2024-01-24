@@ -74,7 +74,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   // necessary for content to be below app bar
   // ...theme.mixins.toolbar,
   justifyContent: "flex-end",
-  border: "1px solid red",
 }));
 
 export default function Navbar() {

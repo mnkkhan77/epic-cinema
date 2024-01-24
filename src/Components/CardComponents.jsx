@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useMemo } from "react";
 import { styled } from "@mui/system";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -7,31 +7,43 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
+import { Tooltip } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
+import ShareIcon from "@mui/icons-material/Share";
 
+// Styled components
+const HoverCardMedia = styled(CardMedia)({
+  position: "relative",
+  overflow: "hidden",
+  cursor: "pointer",
+  transition: "filter 0.3s",
+  "&:hover": {
+    "& img": {
+      filter: "brightness(40%)", // Apply filter only to the image
+    },
+  },
+});
+
+// Component
 const CardComponents = ({
   title,
   name,
   description,
   imageUrl,
-  id,
-  mediaType,
 }) => {
-  const truncatedDescription =
-    description.length > 170 ? `${description.slice(0, 170)}...` : description;
+  const truncatedDescription = useMemo(
+    () =>
+      description.length > 170
+        ? `${description.slice(0, 170)}...`
+        : description,
+    [description]
+  );
+  const truncatedTitle = useMemo(
+    () => (title.length > 14 ? `${title.slice(0, 14)}...` : title),
+    [title]
+  );
 
-  const [isHovered, setIsHovered] = React.useState(false);
-
-  const HoverCardMedia = styled(CardMedia)({
-    position: "relative",
-    overflow: "hidden",
-    cursor: "pointer",
-    transition: "filter 0.3s",
-    "&:hover": {
-      "& img": {
-        filter: "brightness(40%)", // Apply filter only to the image
-      },
-    },
-  });
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Card
@@ -50,12 +62,20 @@ const CardComponents = ({
           width="100%"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
+          style={{
+            position: "relative",
+            overflow: "hidden",
+            cursor: "pointer",
+            transition: "filter 0.3s",
+          }}
         >
-          <img
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            src={imageUrl}
-            alt={title}
-          />
+          <Tooltip title={title}>
+            <img
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              src={imageUrl}
+              alt={title}
+            />
+          </Tooltip>
           {isHovered && (
             <PlayCircleFilledWhiteRoundedIcon
               style={{
@@ -89,13 +109,21 @@ const CardComponents = ({
               textOverflow: "ellipsis",
             }}
           >
-            {title || name || "No Title"}
+            {truncatedTitle || name || "No Title"}
           </Typography>
         </div>
         <div>
-          <Typography variant="body2" color="text.secondary">
-            {truncatedDescription}
-          </Typography>
+          <Tooltip
+            title={description}
+            placement="top-start"
+            leaveDelay={200}
+            arrow
+            style={{ color: "black" }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              {truncatedDescription}
+            </Typography>
+          </Tooltip>
         </div>
       </CardContent>
       <CardActions>
@@ -103,15 +131,12 @@ const CardComponents = ({
           size="small"
           color="success"
           variant="contained"
-          // startIcon={<DownloadIcon />}
+          startIcon={<DownloadIcon />}
         >
           Download
         </Button>
-        <Button size="small" variant="contained">
+        <Button size="small" variant="contained" startIcon={<ShareIcon />}>
           Share
-        </Button>
-        <Button size="small" variant="contained">
-          Read More ...
         </Button>
       </CardActions>
     </Card>
