@@ -7,11 +7,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import PlayCircleFilledWhiteRoundedIcon from "@mui/icons-material/PlayCircleFilledWhiteRounded";
-import { Tooltip } from "@mui/material";
+import { Tooltip, useMediaQuery } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
+import { useTheme } from "@mui/material/styles";
 
-// Styled components
 const HoverCardMedia = styled(CardMedia)({
   position: "relative",
   overflow: "hidden",
@@ -24,18 +24,10 @@ const HoverCardMedia = styled(CardMedia)({
   },
 });
 
-// Component
-const CardComponents = ({
-  title,
-  name,
-  description,
-  imageUrl,
-}) => {
+const CardComponents = ({ title, name, description, imageUrl }) => {
   const truncatedDescription = useMemo(
     () =>
-      description.length > 170
-        ? `${description.slice(0, 170)}...`
-        : description,
+      description.length > 70 ? `${description.slice(0, 50)}...` : description,
     [description]
   );
   const truncatedTitle = useMemo(
@@ -45,14 +37,42 @@ const CardComponents = ({
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+  let cardWidth, cardHeight;
+  if (isSmallScreen) {
+    cardWidth = "100%";
+    cardHeight = "auto";
+  } else if (isMediumScreen) {
+    cardWidth = "100%";
+    cardHeight = "auto";
+  } else if (isLargeScreen) {
+    cardWidth = "100%";
+    cardHeight = "100%";
+  }
+  const cardContentStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    flexGrow: 1,
+    height: "100%",
+  };
+
   return (
     <Card
       sx={{
-        width: 345,
-        height: 400,
+        width: cardWidth,
+        height: cardHeight,
+        flexBasis: "150px",
         display: "flex",
         flexDirection: "column",
         overflow: "visible",
+        border: "2px",
+        borderColor: "purple",
+        borderStyle: "solid",
       }}
     >
       {imageUrl && (
@@ -69,13 +89,11 @@ const CardComponents = ({
             transition: "filter 0.3s",
           }}
         >
-          <Tooltip title={title}>
-            <img
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              src={imageUrl}
-              alt={title}
-            />
-          </Tooltip>
+          <img
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            src={imageUrl}
+            alt={title}
+          />
           {isHovered && (
             <PlayCircleFilledWhiteRoundedIcon
               style={{
@@ -90,27 +108,31 @@ const CardComponents = ({
           )}
         </HoverCardMedia>
       )}
-      <CardContent
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          flexGrow: 1,
-        }}
-      >
+      <CardContent sx={cardContentStyle}>
         <div>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            sx={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
+          <Tooltip
+            title={title || name || "No Title"}
+            placement="top"
+            leaveDelay={200}
+            arrow
+            style={{ color: "black" }}
           >
-            {truncatedTitle || name || "No Title"}
-          </Typography>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              align="center"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                borderBlock: "solid",
+                borderBlockColor: "#6200EA",
+              }}
+            >
+              {truncatedTitle || name || "No Title"}
+            </Typography>
+          </Tooltip>
         </div>
         <div>
           <Tooltip
@@ -126,16 +148,22 @@ const CardComponents = ({
           </Tooltip>
         </div>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ justifyContent: "center" }}>
         <Button
           size="small"
           color="success"
           variant="contained"
+          sx={{ fontSize: "0.5rem" }}
           startIcon={<DownloadIcon />}
         >
           Download
         </Button>
-        <Button size="small" variant="contained" startIcon={<ShareIcon />}>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ fontSize: "0.5rem" }}
+          startIcon={<ShareIcon />}
+        >
           Share
         </Button>
       </CardActions>

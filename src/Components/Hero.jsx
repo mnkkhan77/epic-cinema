@@ -4,6 +4,7 @@ import CardComponents from "./CardComponents";
 import Typography from "@mui/material/Typography";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
+import Grid from "@mui/material/Grid";
 
 const IMG_API = process.env.REACT_APP_IMG_API;
 
@@ -11,22 +12,26 @@ const commonStyles = {
   width: "100%",
   paddingLeft: "30px",
   paddingTop: "20px",
+  paddingRight: "30px",
+  paddingBlockEnd: "30px",
 };
 
 const ListComponent = ({ data, isError }) => (
   <div style={commonStyles}>
     {isError && <div>Error Occurred</div>}
     {!isError && data && (
-      <div style={{ display: "flex", gap: 16 }}>
+      <Grid container spacing={3}>
         {data.map((item) => (
-          <CardComponents
-            key={item.id}
-            title={item.title || item.name}
-            description={item.overview}
-            imageUrl={`${IMG_API}${item.backdrop_path}`}
-          />
+          <Grid item xs={6} sm={4} md={2}>
+            <CardComponents
+              key={item.id}
+              title={item.title || item.name}
+              description={item.overview}
+              imageUrl={`${IMG_API}${item.backdrop_path}`}
+            />
+          </Grid>
         ))}
-      </div>
+      </Grid>
     )}
   </div>
 );
@@ -40,10 +45,18 @@ const Hero = () => {
 
   return (
     <>
-      <div>
-        <Typography variant="h5" style={{ paddingTop: "20px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          paddingTop: "20px",
+        }}
+      >
+        <Typography variant="h6" style={{ marginRight: "30px", paddingLeft: "30px"}}>
           Trending
         </Typography>
+
         <ToggleButtonGroup
           color="primary"
           value={alignment}

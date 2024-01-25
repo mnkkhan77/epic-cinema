@@ -15,6 +15,7 @@ function App() {
       <Route path="/log_in" element={<SignInSide />} />
       <Route path="/sign_up" element={<SignUp />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
+
     </Routes>
   );
 }
