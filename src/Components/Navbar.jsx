@@ -26,7 +26,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
+import Logo from "../logo123.jpg";
 
 const drawerWidth = 320;
 
@@ -71,14 +73,19 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  // ...theme.mixins.toolbar,
   justifyContent: "flex-end",
 }));
 
 export default function Navbar() {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const [open, setOpen] = useState(isLargeScreen);
+
+  useEffect(() => {
+    setOpen(isLargeScreen);
+  }, [isLargeScreen]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -188,27 +195,40 @@ export default function Navbar() {
                 textDecoration: "none",
               }}
             >
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ color: "#aaa" }}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginRight: "10px",
+                }}
               >
-                Epic Cinema
-              </Typography>
+                <div>
+                  <img src={Logo} width={40} height={40} alt="Logo" />
+                </div>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ color: "#aaa", marginRight: "10px" }}
+                >
+                  Epic Cinema
+                </Typography>
+              </div>
             </Link>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center", width: "60%" }}>
-            <InputBase
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              sx={{
-                backgroundColor: "#000",
-                color: "#aaa",
-                px: 3,
-                width: "80%",
-              }}
-            />
+          <Box sx={{ display: "flex", alignItems: "flex-end", width: "60%" }}>
+            {isMediumScreen && (
+              <InputBase
+                placeholder="Search..."
+                inputProps={{ "aria-label": "search" }}
+                sx={{
+                  backgroundColor: "#000",
+                  color: "#aaa",
+                  px: 3,
+                  width: "80%",
+                }}
+              />
+            )}
             <IconButton color="inherit" aria-label="search">
               <SearchIcon />
             </IconButton>
@@ -220,7 +240,7 @@ export default function Navbar() {
                 startIcon={<PersonIcon />}
                 sx={{ color: "#aaa" }}
               >
-                Login
+                {isLargeScreen || isMediumScreen ? "LOGIN" : ""}
               </Button>
             </Link>
           </Box>
@@ -228,7 +248,6 @@ export default function Navbar() {
       </AppBar>
       <Main open={open}>
         <DrawerHeader />
-        {/* <Hero /> */}
       </Main>
     </Box>
   );

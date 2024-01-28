@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import SignUp from "./Pages/SignUp";
 import TermsOfService from "./Pages/TermsOfServices";
 import Layout from "./Components/Layout";
+import DescriptionPage from "./Pages/DescriptionPage";
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
         element={
           <Layout>
             <TermsOfService />
+          </Layout>
+        }
+      />
+      <Route
+        path="/description-page"
+        element={
+          <Layout>
+            <DescriptionPage />
           </Layout>
         }
       />

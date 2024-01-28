@@ -58,7 +58,8 @@ const CardComponents = ({ title, name, description, imageUrl }) => {
     flexDirection: "column",
     justifyContent: "flex-start",
     flexGrow: 1,
-    height: "100%",
+    // height: "100%",
+    minHeight: 100,
   };
 
   return (
@@ -66,7 +67,7 @@ const CardComponents = ({ title, name, description, imageUrl }) => {
       sx={{
         width: cardWidth,
         height: cardHeight,
-        flexBasis: "150px",
+        flexBasis: "100px",
         display: "flex",
         flexDirection: "column",
         overflow: "visible",
@@ -78,7 +79,7 @@ const CardComponents = ({ title, name, description, imageUrl }) => {
       {imageUrl && (
         <HoverCardMedia
           component="div"
-          height="200"
+          height="150"
           width="100%"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

@@ -1,59 +1,40 @@
-import MovieListProvider from "./Provider/MovieListProvider";
-import TvListProvider from "./Provider/TvListProvider";
-import CardComponents from "./CardComponents";
 import Typography from "@mui/material/Typography";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useState } from "react";
-import Grid from "@mui/material/Grid";
-
-const IMG_API = process.env.REACT_APP_IMG_API;
-
-const commonStyles = {
-  width: "100%",
-  paddingLeft: "30px",
-  paddingTop: "20px",
-  paddingRight: "30px",
-  paddingBlockEnd: "30px",
-};
-
-const ListComponent = ({ data, isError }) => (
-  <div style={commonStyles}>
-    {isError && <div>Error Occurred</div>}
-    {!isError && data && (
-      <Grid container spacing={3}>
-        {data.map((item) => (
-          <Grid item xs={6} sm={4} md={2}>
-            <CardComponents
-              key={item.id}
-              title={item.title || item.name}
-              description={item.overview}
-              imageUrl={`${IMG_API}${item.backdrop_path}`}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    )}
-  </div>
-);
+import {
+  TrendingListProvider,
+  TvListProvider,
+  MovieListProvider,
+} from "./Provider/DataProvider";
+import IconBreadcrumbs from "./WithBreadcrumbs";
+import ListComponent from "./components/ListComponent";
 
 const Hero = () => {
-  const [alignment, setAlignment] = useState("Movies");
+  const [alignment, setAlignment] = useState("All");
 
-  const handleChange = (event, newAlignment) => {
-    setAlignment(newAlignment);
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
   };
 
   return (
-    <>
+    <div>
+      <div style={{ paddingLeft: "30px", paddingTop: "30px" }}>
+        <IconBreadcrumbs />
+      </div>
       <div
         style={{
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
-          paddingTop: "20px",
+          paddingTop: "10px",
         }}
       >
-        <Typography variant="h6" style={{ marginRight: "30px", paddingLeft: "30px"}}>
+        <Typography
+          variant="h6"
+          style={{ marginRight: "30px", paddingLeft: "30px" }}
+        >
           Trending
         </Typography>
 
@@ -61,26 +42,36 @@ const Hero = () => {
           color="primary"
           value={alignment}
           exclusive
-          onChange={handleChange}
+          onChange={handleAlignment}
           aria-label="Platform"
         >
+          <ToggleButton value="All">All</ToggleButton>
           <ToggleButton value="Movies">Movies</ToggleButton>
           <ToggleButton value="Tv">Tv</ToggleButton>
         </ToggleButtonGroup>
       </div>
-      <MovieListProvider
-        render={({ trending, isError }) =>
-          alignment === "Movies" && (
+      {alignment === "All" && (
+        <TrendingListProvider
+          render={({ trending, isError }) => (
             <ListComponent data={trending} isError={isError} />
-          )
-        }
-      />
-      <TvListProvider
-        render={({ tv, isError }) =>
-          alignment === "Tv" && <ListComponent data={tv} isError={isError} />
-        }
-      />
-    </>
+          )}
+        />
+      )}
+      {alignment === "Movies" && (
+        <MovieListProvider
+          render={({ movie, isError }) => (
+            <ListComponent data={movie} isError={isError} />
+          )}
+        />
+      )}
+      {alignment === "Tv" && (
+        <TvListProvider
+          render={({ tv, isError }) => (
+            <ListComponent data={tv} isError={isError} />
+          )}
+        />
+      )}
+    </div>
   );
 };
 

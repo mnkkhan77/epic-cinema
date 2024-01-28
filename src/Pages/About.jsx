@@ -1,5 +1,6 @@
 import { styled } from "@mui/system";
 import ContactForm from "../Components/ContactForm";
+import WithBreadcrumbs from "../Components/WithBreadcrumbs";
 
 const StyledAboutContainer = styled("div")({
   maxWidth: "800px",
@@ -24,8 +25,7 @@ const StyledParagraph = styled("p")({
   fontSize: "16px",
   lineHeight: "1.6",
 });
-
-const StyledLink = styled("a")({
+styled("a")({
   color: "#007bff",
   textDecoration: "none",
   fontWeight: "bold",
@@ -33,7 +33,6 @@ const StyledLink = styled("a")({
     textDecoration: "underline",
   },
 });
-
 const About = () => {
   return (
     <StyledAboutContainer>
@@ -59,4 +58,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default WithBreadcrumbs(About);

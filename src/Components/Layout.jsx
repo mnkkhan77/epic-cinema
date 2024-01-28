@@ -3,10 +3,8 @@ import Footer from "./Footer";
 const Layout = ({ children }) => {
   return (
     <div>
-      <Navbar /> {/* Use Navbar here */}
-      <main>
-        {children} {/* This is where the content of each page will go */}
-      </main>
+      <Navbar />
+      <main style={{ marginBottom: "80px" }}>{children}</main>
       <Footer />
     </div>
   );

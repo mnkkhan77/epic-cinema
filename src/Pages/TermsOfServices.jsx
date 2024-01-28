@@ -1,3 +1,5 @@
+import WithBreadcrumbs from "../Components/WithBreadcrumbs";
+
 const TermsOfServices = () => {
   const styles = {
     container: {
@@ -64,4 +66,4 @@ const TermsOfServices = () => {
   );
 };
 
-export default TermsOfServices;
+export default WithBreadcrumbs(TermsOfServices);
