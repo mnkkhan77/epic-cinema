@@ -7,6 +7,7 @@ import SignUp from "./Pages/SignUp";
 import TermsOfService from "./Pages/TermsOfServices";
 import Layout from "./Components/Layout";
 import DescriptionPage from "./Pages/DescriptionPage";
+import Reset from "./Pages/Reset";
 
 function App() {
   return (
@@ -64,6 +65,14 @@ function App() {
         element={
           <Layout>
             <DescriptionPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/reset"
+        element={
+          <Layout>
+            <Reset />
           </Layout>
         }
       />

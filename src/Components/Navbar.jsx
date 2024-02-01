@@ -25,10 +25,12 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMediaQuery } from "@mui/material";
 import Logo from "../logo123.jpg";
+import { TopRatedProvider } from "./Provider/DataProvider";
+import ListComponent from "./components/ListComponent";
 
 const drawerWidth = 320;
 
@@ -95,6 +97,34 @@ export default function Navbar() {
     setOpen(false);
   };
 
+  const navigate = useNavigate();
+  const handleListItems = (itemName) => {
+    if (
+      itemName === "Home" ||
+      itemName === "Movies" ||
+      itemName === "TV Shows"
+    ) {
+      navigate("/");
+      // Navigation will be handled in the useEffect
+    } else if (itemName === "Top IMDB") {
+      // Use the TopRatedProvider with the specified render function
+      // You should replace 'your-top-rated-provider' with the actual module name
+      // This is just a placeholder
+      <TopRatedProvider
+        render={({ topRated, isError }) => (
+          <ListComponent data={topRated} isError={isError} />
+        )}
+      />;
+    }
+  };
+
+  useEffect(() => {
+    // Use useEffect to handle navigation after the component is rendered
+    if (isLargeScreen) {
+      navigate("/");
+    }
+  }, [navigate, isLargeScreen]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -159,6 +189,7 @@ export default function Navbar() {
             { text: "TV Shows", icon: <TvIcon /> },
           ].map(({ text, icon }, index) => (
             <ListItem key={text} disablePadding>
+              {/* <ListItemButton onClick={() => handleListItems(text)}> */}
               <ListItemButton>
                 <ListItemIcon
                   sx={{
