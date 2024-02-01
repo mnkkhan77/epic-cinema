@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-// Simple in-memory cache
 const cache = {};
 
 const useDataProvider = (url) => {
@@ -17,7 +16,6 @@ const useDataProvider = (url) => {
       setIsLoading(true);
       setError(null);
 
-      // If cache exists for this url, use it
       if (cache[url]) {
         setData(cache[url]);
         setIsLoading(false);
@@ -25,7 +23,6 @@ const useDataProvider = (url) => {
         try {
           const result = await axios(url);
           setData(result.data.results);
-          // Save response to cache
           cache[url] = result.data.results;
         } catch (error) {
           setError(error.message);
@@ -41,37 +38,56 @@ const useDataProvider = (url) => {
   return { data, isLoading, error };
 };
 
-// Rest of your code...
-
-
 export const MovieListProvider = ({ render }) => {
   const url_movie = `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}`;
 
-  const { data: movie,isLoading, isError } = useDataProvider(url_movie);
+  const { data: movie, isLoading, isError } = useDataProvider(url_movie);
 
-  return render({ movie,isLoading, isError });
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ movie, isLoading, isError })}
+    </Suspense>
+  );
 };
 
 export const TrendingListProvider = ({ render }) => {
   const url_trending = `${BASE_URL}/3/trending/all/day?api_key=${API_KEY}`;
 
-  const { data: trending,isLoading, isError } = useDataProvider(url_trending);
+  const { data: trending, isLoading, isError } = useDataProvider(url_trending);
 
-  return render({ trending,isLoading, isError });
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ trending, isLoading, isError })}
+    </Suspense>
+  );
 };
 
 export const TvListProvider = ({ render }) => {
   const url_tv = `${BASE_URL}/3/trending/tv/day?api_key=${API_KEY}`;
 
-  const { data: tv,isLoading, isError } = useDataProvider(url_tv);
+  const { data: tv, isLoading, isError } = useDataProvider(url_tv);
 
-  return render({ tv,isLoading, isError });
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ tv, isLoading, isError })}
+    </Suspense>
+  );
 };
 
 export const TopRatedProvider = ({ render }) => {
   const url_top_rated = `${BASE_URL}/3/movie/top_rated?api_key=${API_KEY}`;
 
-  const { data: topRated,isLoading, isError } = useDataProvider(url_top_rated);
+  const { data: topRated, isLoading, isError } = useDataProvider(url_top_rated);
 
-  return render({ topRated,isLoading, isError });
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ topRated, isLoading, isError })}
+    </Suspense>
+  );
 };
+
+// movie search
+// const url = 'https://api.themoviedb.org/3/search/movie?query={movie%name}&include_adult=false&language=en-US&page=1';
+//
+// tv search
+// const url = 'https://api.themoviedb.org/3/search/tv?query={tv%name}&include_adult=false&language=en-US&page=1';
