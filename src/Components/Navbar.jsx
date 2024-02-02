@@ -25,12 +25,9 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useMediaQuery } from "@mui/material";
+import { Link} from "react-router-dom";
+import { useState} from "react";
 import Logo from "../logo123.jpg";
-import { TopRatedProvider } from "./Provider/DataProvider";
-import ListComponent from "./components/ListComponent";
 
 const drawerWidth = 320;
 
@@ -80,14 +77,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function Navbar() {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.up("sm"));
-
-  const [open, setOpen] = useState(isLargeScreen);
-
-  useEffect(() => {
-    setOpen(isLargeScreen);
-  }, [isLargeScreen]);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,34 +86,6 @@ export default function Navbar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
-  const navigate = useNavigate();
-  const handleListItems = (itemName) => {
-    if (
-      itemName === "Home" ||
-      itemName === "Movies" ||
-      itemName === "TV Shows"
-    ) {
-      navigate("/");
-      // Navigation will be handled in the useEffect
-    } else if (itemName === "Top IMDB") {
-      // Use the TopRatedProvider with the specified render function
-      // You should replace 'your-top-rated-provider' with the actual module name
-      // This is just a placeholder
-      <TopRatedProvider
-        render={({ topRated, isError }) => (
-          <ListComponent data={topRated} isError={isError} />
-        )}
-      />;
-    }
-  };
-
-  useEffect(() => {
-    // Use useEffect to handle navigation after the component is rendered
-    if (isLargeScreen) {
-      navigate("/");
-    }
-  }, [navigate, isLargeScreen]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -189,7 +151,6 @@ export default function Navbar() {
             { text: "TV Shows", icon: <TvIcon /> },
           ].map(({ text, icon }, index) => (
             <ListItem key={text} disablePadding>
-              {/* <ListItemButton onClick={() => handleListItems(text)}> */}
               <ListItemButton>
                 <ListItemIcon
                   sx={{
@@ -247,19 +208,17 @@ export default function Navbar() {
               </div>
             </Link>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "flex-end", width: "60%" }}>
-            {isMediumScreen && (
-              <InputBase
-                placeholder="Search..."
-                inputProps={{ "aria-label": "search" }}
-                sx={{
-                  backgroundColor: "#000",
-                  color: "#aaa",
-                  px: 3,
-                  width: "80%",
-                }}
-              />
-            )}
+          <Box sx={{ display: "flex", alignItems: "center", width: "60%" }}>
+            <InputBase
+              placeholder="Search..."
+              inputProps={{ "aria-label": "search" }}
+              sx={{
+                backgroundColor: "#000",
+                color: "#aaa",
+                px: 3,
+                width: "80%",
+              }}
+            />
             <IconButton color="inherit" aria-label="search">
               <SearchIcon />
             </IconButton>
@@ -271,7 +230,7 @@ export default function Navbar() {
                 startIcon={<PersonIcon />}
                 sx={{ color: "#aaa" }}
               >
-                {isLargeScreen || isMediumScreen ? "LOGIN" : ""}
+                Login
               </Button>
             </Link>
           </Box>
