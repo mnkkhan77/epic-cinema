@@ -19,7 +19,7 @@ const ListComponent = ({ data, isError }) => (
         {data.map((item) => (
           <Grid item xs={6} sm={4} md={2}>
             <CardComponents
-              key={item.id}
+              id={item.id}
               title={item.title || item.name}
               description={item.overview}
               imageUrl={`${IMG_API}${item.backdrop_path}`}

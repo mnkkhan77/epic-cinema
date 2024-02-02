@@ -11,6 +11,7 @@ import { Tooltip, useMediaQuery } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const HoverCardMedia = styled(CardMedia)({
   position: "relative",
@@ -24,7 +25,7 @@ const HoverCardMedia = styled(CardMedia)({
   },
 });
 
-const CardComponents = ({ title, name, description, imageUrl }) => {
+const CardComponents = ({ id, title, name, description, imageUrl }) => {
   const truncatedDescription = useMemo(
     () =>
       description.length > 70 ? `${description.slice(0, 50)}...` : description,
@@ -60,6 +61,14 @@ const CardComponents = ({ title, name, description, imageUrl }) => {
     flexGrow: 1,
     // height: "100%",
     minHeight: 100,
+  };
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // navigate(`/page/${id}`);
+    console.log(`Clicked card with id: ${id} and name: ${name || title}`);
+    // return <MovieDetailProvider id={id} render={/* Your render function */} />;
+    // call the movie/tv api and send the data to DescriptionPage and render the data there
   };
 
   return (
@@ -97,6 +106,7 @@ const CardComponents = ({ title, name, description, imageUrl }) => {
           />
           {isHovered && (
             <PlayCircleFilledWhiteRoundedIcon
+              onClick={handleClick}
               style={{
                 position: "absolute",
                 top: "50%",

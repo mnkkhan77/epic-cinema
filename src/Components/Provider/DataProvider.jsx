@@ -86,6 +86,34 @@ export const TopRatedProvider = ({ render }) => {
   );
 };
 
+export const MovieDetailProvider = ({ id, render }) => {
+  const url_movie_detail = `${BASE_URL}/3/movie/${id}?api_key=${API_KEY}`;
+
+  const {
+    data: movieDetail,
+    isLoading,
+    isError,
+  } = useDataProvider(url_movie_detail);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ movieDetail, isLoading, isError })}
+    </Suspense>
+  );
+};
+
+export const TvDetailProvider = ({ id, render }) => {
+  const url_tv_detail = `${BASE_URL}/3/tv/${id}?api_key=${API_KEY}`;
+
+  const { data: tvDetail, isLoading, isError } = useDataProvider(url_tv_detail);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ tvDetail, isLoading, isError })}
+    </Suspense>
+  );
+};
+
 // movie search
 // const url = 'https://api.themoviedb.org/3/search/movie?query={movie%name}&include_adult=false&language=en-US&page=1';
 //
