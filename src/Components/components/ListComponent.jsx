@@ -23,6 +23,7 @@ const ListComponent = ({ data, isError }) => (
               title={item.title || item.name}
               description={item.overview}
               imageUrl={`${IMG_API}${item.backdrop_path}`}
+              media_type={item.media_type}
             />
           </Grid>
         ))}

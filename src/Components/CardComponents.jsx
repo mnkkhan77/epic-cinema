@@ -25,7 +25,7 @@ const HoverCardMedia = styled(CardMedia)({
   },
 });
 
-const CardComponents = ({ id, title, name, description, imageUrl }) => {
+const CardComponents = ({ id, title, name, description, imageUrl, media_type }) => {
   const truncatedDescription = useMemo(
     () =>
       description.length > 70 ? `${description.slice(0, 50)}...` : description,
@@ -65,10 +65,7 @@ const CardComponents = ({ id, title, name, description, imageUrl }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // navigate(`/page/${id}`);
-    console.log(`Clicked card with id: ${id} and name: ${name || title}`);
-    // return <MovieDetailProvider id={id} render={/* Your render function */} />;
-    // call the movie/tv api and send the data to DescriptionPage and render the data there
+    navigate(`/${media_type}/${id}`, { state: { data: { id, title, name, description, imageUrl, media_type } } });
   };
 
   return (

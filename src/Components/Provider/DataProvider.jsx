@@ -22,8 +22,9 @@ const useDataProvider = (url) => {
       } else {
         try {
           const result = await axios(url);
-          setData(result.data.results);
-          cache[url] = result.data.results;
+          const responseData = result.data.results ? result.data.results : result.data;
+          setData(responseData);
+          cache[url] = responseData;
         } catch (error) {
           setError(error.message);
         } finally {
@@ -96,11 +97,12 @@ export const MovieDetailProvider = ({ id, render }) => {
   } = useDataProvider(url_movie_detail);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      {render({ movieDetail, isLoading, isError })}
-    </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        {render({ movieDetail, isLoading, isError })}
+      </Suspense>
   );
 };
+
 
 export const TvDetailProvider = ({ id, render }) => {
   const url_tv_detail = `${BASE_URL}/3/tv/${id}?api_key=${API_KEY}`;

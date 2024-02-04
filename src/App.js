@@ -61,7 +61,7 @@ function App() {
         }
       />
       <Route
-        path="/description-page"
+        path=":media_type/:id"
         element={
           <Layout>
             <DescriptionPage />
