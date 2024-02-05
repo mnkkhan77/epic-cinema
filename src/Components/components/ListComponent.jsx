@@ -17,7 +17,7 @@ const ListComponent = ({ data, isError }) => (
     {!isError && data && (
       <Grid container spacing={3}>
         {data.map((item) => (
-          <Grid item xs={6} sm={4} md={2}>
+          <Grid item xs={6} sm={4} md={2} key={item.id}>
             <CardComponents
               id={item.id}
               title={item.title || item.name}

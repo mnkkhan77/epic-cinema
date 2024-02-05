@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Rating } from "@mui/material";
 import { PlayCircle } from "@mui/icons-material";
+import "./style.css";
 import {
   MovieDetailProvider,
   TvDetailProvider,
 } from "../Components/Provider/DataProvider";
+import CircularWithValueLabel from "../Components/components/CircularProgressWithLabel";
 const Genre = ({ data }) => {
   if (!data || data.length === 0) {
     return null;
   }
 
   return (
-    <div className="genre">
+    <div className="genres">
       {data.map((genre, index) => (
-        <span key={index}>{genre}</span>
+        <label key={index}>{genre} </label>
       ))}
     </div>
   );
@@ -62,23 +63,20 @@ const DescriptionPage = () => {
   const [videoId, setVideoId] = useState(null);
   const { media_type, id } = location.state.data;
 
-    const toHoursAndMinutes = (totalMinutes) => {
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
-    };
+  const toHoursAndMinutes = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+  };
 
-
-    const IMG_API = process.env.REACT_APP_IMG_API;
-    return (
-    <div className="detailsBanner" style={{ marginTop: "30px" }}>
+  const IMG_API = process.env.REACT_APP_IMG_API;
+  return (
+    <div className="detailsBanner">
       <DetailProvider mediaType={media_type} id={id}>
         {(detail) => (
           <>
             <div className="backdrop-img">
-              <img src={`${IMG_API}${detail?.backdrop_path}`} alt="Backdrop" style={{width: "auto", height: 250}}/>
-
-                {/*imageUrl={`${IMG_API}${item.backdrop_path}`}*/}
+              <img src={`${IMG_API}${detail?.backdrop_path}`} alt="Backdrop" />
             </div>
             <div className="opacity-layer"></div>
             <div className="contentWrapper">
@@ -89,7 +87,6 @@ const DescriptionPage = () => {
                       className="posterImg"
                       src={`${IMG_API}${detail?.poster_path}`}
                       alt={detail?.title || detail?.name}
-                      style={{width: "auto", height: 250}}
                     />
                   ) : (
                     <img
@@ -106,7 +103,9 @@ const DescriptionPage = () => {
                   <Genre data={detail?.genres?.map((g) => g.name)} />
 
                   <div className="row">
-                    <Rating rating={detail?.vote_average?.toFixed(1)} />
+                    <CircularWithValueLabel
+                      progress={detail?.vote_average * 10}
+                    />
                     {detail?.video && (
                       <div
                         className="playbtn"
