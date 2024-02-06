@@ -10,6 +10,7 @@ const CircularProgressWithLabel = ({ value, ...props }) => {
         aria-label="circularProgress"
         variant="determinate"
         color="success"
+        style={{backgroundColor: "#394F8A", borderRadius: "50%"}}
         thickness={5}
         value={value}
         {...props}
@@ -39,7 +40,7 @@ const CircularProgressWithLabel = ({ value, ...props }) => {
   );
 };
 
-const CircularWithValueLabel = ({ progress = 50 }) => {
+const CircularWithValueLabel = ({ progress = 100 }) => {
   return <CircularProgressWithLabel value={progress} />;
 };
 
