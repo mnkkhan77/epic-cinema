@@ -81,9 +81,17 @@ const DescriptionPage = () => {
   const { media_type, id } = location.state.data;
 
   const toHoursAndMinutes = (totalMinutes) => {
+    if (!totalMinutes || isNaN(totalMinutes)) {
+      return "";
+    }
+
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
-    return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+    if (hours === 0) {
+      return `${minutes}m`;
+    } else {
+      return `${hours}h ${minutes}m`;
+    }
   };
 
   const IMG_API = process.env.REACT_APP_IMG_API;
@@ -99,7 +107,7 @@ const DescriptionPage = () => {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                  alignSelf: "center",
+                alignSelf: "center",
                 opacity: "25%",
                 overflow: "hidden",
               }}
@@ -165,7 +173,7 @@ const DescriptionPage = () => {
                       marginBottom: "15px",
                       fontStyle: "italic",
                       opacity: 0.5,
-                      color: "white",
+                      color: "yellow",
                     }}
                   >
                     {detail?.tagline}
@@ -189,25 +197,43 @@ const DescriptionPage = () => {
                         <span className="text">Watch Trailer</span>
                       </div>
                     )}
-                      {detail?.status ==="Released" &&(
-                          <Button variant="contained" size="small" sx={{color: "black", fontWeight: "bold", fontSize: "1rem", padding: "0px"}} >HD</Button>
-                      )}
+                    {(detail?.status === "Released" || detail?.status ==="Ended" || detail?.status ==="Returning Series") && (
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          color: "black",
+                          fontWeight: "bold",
+                          fontSize: "1rem",
+                          padding: "0px",
+                        }}
+                      >
+                        HD
+                      </Button>
+                    )}
+                      {detail?.episode_run_time && <label style={{backgroundColor: "#c0c0c0", borderRadius: "7%", fontWeight: "bold"}}>
+                          Seasons : {detail?.number_of_seasons}
+                      </label>}
                   </div>
-                    <label>
-                        {
-                            detail?.spoken_languages?.map((language, index) => (
-                                <label style={{
-                                    backgroundColor: "#dfdfdf",
-                                    margin: "2px",
-                                    borderRadius: "10%",
-                                    padding: "2px",
-                                    display: "inline-block",
-                                    fontSize: "0.7em",
-                                    fontWeight: "bold",
-                                    marginBottom: "30px",
-                                }} key={index}>{language.english_name}</label>
-                            ))}
-                    </label>
+                  <label>
+                    {detail?.spoken_languages?.map((language, index) => (
+                      <label
+                        style={{
+                          backgroundColor: "#dfdfdf",
+                          margin: "2px",
+                          borderRadius: "10%",
+                          padding: "2px",
+                          display: "inline-block",
+                          fontSize: "0.7em",
+                          fontWeight: "bold",
+                          marginBottom: "30px",
+                        }}
+                        key={index}
+                      >
+                        {language.english_name}
+                      </label>
+                    ))}
+                  </label>
 
                   <div className="overview">
                     <div className="heading">Overview</div>
@@ -221,26 +247,31 @@ const DescriptionPage = () => {
                         <span className="text">{detail?.status}</span>
                       </div>
                     )}
-                    {detail?.release_date && (
+                    {(detail?.release_date || detail?.first_air_date) && (
                       <div className="infoItem">
                         <span className="text bold">Release Date: </span>
                         <span className="text">
-                          {new Date(detail?.release_date).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            }
-                          )}
+                          {new Date(
+                            detail?.release_date || detail?.first_air_date
+                          ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
                         </span>
                       </div>
                     )}
-                    {detail?.runtime && (
+                    {(detail?.runtime ||
+                      (detail?.episode_run_time &&
+                        detail.episode_run_time.length > 0)) && (
                       <div className="infoItem">
                         <span className="text bold">Runtime: </span>
                         <span className="text">
-                          {toHoursAndMinutes(detail?.runtime)}
+                          {toHoursAndMinutes(detail?.runtime) ||
+                            toHoursAndMinutes(
+                              detail?.episode_run_time &&
+                                detail.episode_run_time[0]
+                            )}
                         </span>
                       </div>
                     )}
