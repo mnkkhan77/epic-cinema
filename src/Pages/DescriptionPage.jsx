@@ -10,6 +10,7 @@ import CircularWithValueLabel from "../Components/components/CircularProgressWit
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 
 const Genre = ({ data }) => {
   if (!data || data.length === 0) return null;
@@ -161,6 +162,7 @@ const DescriptionPage = () => {
                     style={{
                       fontSize: "28px",
                       lineHeight: "40px",
+                        fontWeight: "bold",
                       color: "white",
                     }}
                   >
@@ -182,9 +184,9 @@ const DescriptionPage = () => {
                   <Genre data={detail?.genres?.map((g) => g.name)} />
 
                   <div className="row">
-                    <CircularWithValueLabel
+                      {detail?.vote_average !=0 ? <CircularWithValueLabel
                       progress={detail?.vote_average * 10}
-                    />
+                      /> : <div style={{color: "white",textShadow: "0 0 5px #fff, 0 0 10px #fff, 0 0 15px #b92eff, 0 0 20px #b92eff, 0 0 25px #b92eff, 0 0 30px #b92eff, 0 0 35px #b92eff"}}>Not rated yet</div>}
                     {detail?.video && (
                       <div
                         className="playbtn"
@@ -237,6 +239,7 @@ const DescriptionPage = () => {
 
                   <div className="overview">
                     <div className="heading">Overview</div>
+                    <Divider/>
                     <div className="description">{detail?.overview}</div>
                   </div>
 

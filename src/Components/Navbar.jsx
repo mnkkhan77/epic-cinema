@@ -25,7 +25,7 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
-import { Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useState} from "react";
 import Logo from "../logo123.jpg";
 
@@ -78,6 +78,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -87,7 +88,12 @@ export default function Navbar() {
     setOpen(false);
   };
 
-  return (
+  const handleClick = (path) => {
+    console.log('Navigating to: ', path);
+    navigate(path); // Navigate to the specified path
+  };
+
+    return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -145,13 +151,13 @@ export default function Navbar() {
         <Divider style={{ background: "#424242" }} />
         <List>
           {[
-            { text: "Home", icon: <HomeIcon /> },
-            { text: "Top IMDB", icon: <MovieFilterIcon /> },
-            { text: "Movies", icon: <MovieIcon /> },
-            { text: "TV Shows", icon: <TvIcon /> },
-          ].map(({ text, icon }, index) => (
+            { text: "Home", icon: <HomeIcon />, path: "/" },
+            { text: "Top IMDB", icon: <MovieFilterIcon />, path: "/top_imdb" },
+            { text: "Movies", icon: <MovieIcon />, path: "/movies" },
+            { text: "TV Shows", icon: <TvIcon />, path: "/tv" },
+          ].map(({ text, icon , path }, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => handleClick({path})}>
                 <ListItemIcon
                   sx={{
                     color: "#aaa",
