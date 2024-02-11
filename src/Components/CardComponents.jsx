@@ -25,7 +25,14 @@ const HoverCardMedia = styled(CardMedia)({
   },
 });
 
-const CardComponents = ({ id, title, name, description, imageUrl, media_type }) => {
+const CardComponents = ({
+  id,
+  title,
+  name,
+  description,
+  imageUrl,
+  media_type,
+}) => {
   const truncatedDescription = useMemo(
     () =>
       description.length > 70 ? `${description.slice(0, 50)}...` : description,
@@ -44,10 +51,7 @@ const CardComponents = ({ id, title, name, description, imageUrl, media_type }) 
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   let cardWidth, cardHeight;
-  if (isSmallScreen) {
-    cardWidth = "100%";
-    cardHeight = "auto";
-  } else if (isMediumScreen) {
+  if (isSmallScreen || isMediumScreen) {
     cardWidth = "100%";
     cardHeight = "auto";
   } else if (isLargeScreen) {
@@ -65,7 +69,9 @@ const CardComponents = ({ id, title, name, description, imageUrl, media_type }) 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/${media_type}/${id}`, { state: { data: { id, title, name, description, imageUrl, media_type } } });
+    navigate(`/${media_type}/${id}`, {
+      state: { data: { id, title, name, description, imageUrl, media_type } },
+    });
   };
 
   return (
@@ -97,6 +103,7 @@ const CardComponents = ({ id, title, name, description, imageUrl, media_type }) 
           }}
         >
           <img
+            onClick={handleClick}
             style={{ objectFit: "cover", width: "100%", height: "100%" }}
             src={imageUrl}
             alt={title}
@@ -164,7 +171,7 @@ const CardComponents = ({ id, title, name, description, imageUrl, media_type }) 
           sx={{ fontSize: "0.5rem" }}
           startIcon={<DownloadIcon />}
         >
-          Download
+          {!isSmallScreen && "Download"}
         </Button>
         <Button
           size="small"
@@ -172,7 +179,7 @@ const CardComponents = ({ id, title, name, description, imageUrl, media_type }) 
           sx={{ fontSize: "0.5rem" }}
           startIcon={<ShareIcon />}
         >
-          Share
+          {!isSmallScreen && "Share"}
         </Button>
       </CardActions>
     </Card>

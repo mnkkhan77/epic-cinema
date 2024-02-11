@@ -9,8 +9,9 @@ import {
 import CircularWithValueLabel from "../Components/components/CircularProgressWithLabel";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import Skeleton from "@mui/material/Skeleton";
+import MatrixLoader from "../Components/components/MatrixLoader";
 
 const Genre = ({ data }) => {
   if (!data || data.length === 0) return null;
@@ -40,8 +41,9 @@ const DetailProvider = ({ mediaType, id, children }) => {
     <MovieDetailProvider
       id={id}
       render={({ movieDetail, isLoading, isError }) => {
+        // return <MatrixLoader />;
         if (isLoading) {
-          return <div>Loading...</div>;
+          return <MatrixLoader />;
         }
 
         if (isError) {
@@ -56,7 +58,7 @@ const DetailProvider = ({ mediaType, id, children }) => {
       id={id}
       render={({ tvDetail, isLoading, isError }) => {
         if (isLoading) {
-          return <div>Loading...</div>;
+          return <MatrixLoader />;
         }
 
         if (isError) {
@@ -108,12 +110,27 @@ const DescriptionPage = () => {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                alignSelf: "center",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "flex-start",
                 opacity: "25%",
                 overflow: "hidden",
               }}
             >
-              <img src={`${IMG_API}${detail?.backdrop_path}`} alt="Backdrop" />
+              {detail?.backdrop_path ? (
+                <img
+                  src={`${IMG_API}${detail?.backdrop_path}`}
+                  alt="Backdrop"
+                  style={{ maxWidth: "100%", height: "auto" }}
+                />
+              ) : (
+                <Skeleton
+                  sx={{ bgcolor: "grey.900" }}
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                />
+              )}
             </div>
             <div
               style={{
@@ -142,51 +159,111 @@ const DescriptionPage = () => {
                   gap: "25px",
                 }}
               >
-                <div className="left">
+                <div
+                  style={{
+                    flexShrink: "0",
+                    width: isSmallScreen ? "200px" : "350px",
+                    fontWeight: "bold",
+                    display: "block",
+                  }}
+                >
                   {detail?.poster_path ? (
                     <img
+                      style={{ width: "100%", borderRadius: "12px" }}
                       className="posterImg"
                       src={`${IMG_API}${detail?.poster_path}`}
                       alt={detail?.title || detail?.name}
                     />
                   ) : (
-                    <img
-                      className="posterImg"
-                      src={`${IMG_API}${detail?.poster_path}`}
-                      alt={detail?.title || detail?.name}
+                    <Skeleton
+                      sx={{ bgcolor: "grey.900" }}
+                      variant="rectangular"
+                      width="100%"
+                      height="100%"
                     />
                   )}
                 </div>
                 <div className="right">
-                  <div
-                    style={{
-                      fontSize: "28px",
-                      lineHeight: "40px",
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <div
+                      style={{
+                        fontSize: "28px",
+                        lineHeight: "40px",
                         fontWeight: "bold",
-                      color: "white",
-                    }}
-                  >
-                    {detail?.title || detail?.name}
+                        color: "white",
+                        marginRight: "10px", // Adjust spacing between the two divs
+                      }}
+                    >
+                      {detail?.title || detail?.name}
+                    </div>
+                    {detail?.original_name && (
+                      <div
+                        style={{
+                          fontSize: "28px",
+                          lineHeight: "40px",
+                          fontWeight: "bold",
+                          color: "white",
+                        }}
+                      >
+                        ( {detail?.original_name} )
+                      </div>
+                    )}
                   </div>
+
                   <div
                     style={{
                       fontSize: "16px",
                       lineHeight: "24px",
-                      marginBottom: "15px",
                       fontStyle: "italic",
                       opacity: 0.5,
                       color: "yellow",
+                      marginBottom: detail?.created_by ? "0px" : "15px",
                     }}
                   >
                     {detail?.tagline}
                   </div>
+                  {detail?.created_by && (
+                    <div
+                      style={{
+                        color: "#fff",
+                        fontSize: "0.8em",
+                        marginBottom: "15px",
+                        borderRadius: "10%",
+                        padding: "1px 5px 1px",
+                      }}
+                    >
+                      ( Created By :{" "}
+                      {detail?.created_by?.map((cby, index, array) => {
+                        if (index === array.length - 1) {
+                          return cby.name;
+                        } else if (index === array.length - 2) {
+                          return `${cby.name} and `;
+                        } else {
+                          return `${cby.name}, `;
+                        }
+                      })}{" "}
+                      )
+                    </div>
+                  )}
 
                   <Genre data={detail?.genres?.map((g) => g.name)} />
 
                   <div className="row">
-                      {detail?.vote_average !=0 ? <CircularWithValueLabel
-                      progress={detail?.vote_average * 10}
-                      /> : <div style={{color: "white",textShadow: "0 0 5px #fff, 0 0 10px #fff, 0 0 15px #b92eff, 0 0 20px #b92eff, 0 0 25px #b92eff, 0 0 30px #b92eff, 0 0 35px #b92eff"}}>Not rated yet</div>}
+                    {detail?.vote_average !== 0 ? (
+                      <CircularWithValueLabel
+                        progress={detail?.vote_average * 10}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          color: "white",
+                          textShadow:
+                            "0 0 5px #fff, 0 0 10px #fff, 0 0 15px #b92eff, 0 0 20px #b92eff, 0 0 25px #b92eff, 0 0 30px #b92eff, 0 0 35px #b92eff",
+                        }}
+                      >
+                        Not rated yet
+                      </div>
+                    )}
                     {detail?.video && (
                       <div
                         className="playbtn"
@@ -199,23 +276,47 @@ const DescriptionPage = () => {
                         <span className="text">Watch Trailer</span>
                       </div>
                     )}
-                    {(detail?.status === "Released" || detail?.status ==="Ended" || detail?.status ==="Returning Series") && (
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          color: "black",
+                    {(detail?.status === "Released" ||
+                      detail?.status === "Ended" ||
+                      detail?.status === "Returning Series") && (
+                      <label
+                        style={{
+                          color: "#fff",
+                          backgroundColor: "#dd0000",
+                          borderRadius: "10%",
                           fontWeight: "bold",
-                          fontSize: "1rem",
-                          padding: "0px",
+                          padding: "1px 5px 1px",
                         }}
                       >
                         HD
-                      </Button>
+                      </label>
                     )}
-                      {detail?.episode_run_time && <label style={{backgroundColor: "#c0c0c0", borderRadius: "7%", fontWeight: "bold"}}>
-                          Seasons : {detail?.number_of_seasons}
-                      </label>}
+                    {detail?.episode_run_time && (
+                      <>
+                        <label
+                          style={{
+                            backgroundColor: "#c0c0c0",
+                            borderRadius: "7%",
+                            fontWeight: "bold",
+                            padding: "1px 5px 1px",
+                          }}
+                        >
+                          {`Season${
+                            detail?.number_of_seasons === 1 ? "" : "s"
+                          } : ${detail?.number_of_seasons}`}
+                        </label>
+                        <label
+                          style={{
+                            backgroundColor: "#c0c0c0",
+                            borderRadius: "7%",
+                            fontWeight: "bold",
+                            padding: "1px 5px 1px",
+                          }}
+                        >
+                          {`Episodes : ${detail?.number_of_episodes}`}
+                        </label>
+                      </>
+                    )}
                   </div>
                   <label>
                     {detail?.spoken_languages?.map((language, index) => (
@@ -239,7 +340,7 @@ const DescriptionPage = () => {
 
                   <div className="overview">
                     <div className="heading">Overview</div>
-                    <Divider/>
+                    <Divider sx={{ marginBottom: "10px" }} />
                     <div className="description">{detail?.overview}</div>
                   </div>
 
