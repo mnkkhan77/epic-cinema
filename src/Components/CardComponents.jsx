@@ -12,6 +12,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Skeleton from "@mui/material/Skeleton";
 
 const HoverCardMedia = styled(CardMedia)({
   position: "relative",
@@ -63,7 +64,6 @@ const CardComponents = ({
     flexDirection: "column",
     justifyContent: "flex-start",
     flexGrow: 1,
-    // height: "100%",
     minHeight: 100,
   };
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ const CardComponents = ({
         borderStyle: "solid",
       }}
     >
-      {imageUrl && (
+      {imageUrl ? (
         <HoverCardMedia
           component="div"
           height="150"
@@ -122,6 +122,8 @@ const CardComponents = ({
             />
           )}
         </HoverCardMedia>
+      ) : (
+        <Skeleton variant="rectangular" width={210} height={60} />
       )}
       <CardContent sx={cardContentStyle}>
         <div>
@@ -168,6 +170,7 @@ const CardComponents = ({
           size="small"
           color="success"
           variant="contained"
+          onClick={handleClick}
           sx={{ fontSize: "0.5rem" }}
           startIcon={<DownloadIcon />}
         >

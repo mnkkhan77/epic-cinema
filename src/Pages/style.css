@@ -42,10 +42,6 @@
   flex-direction: column;
   gap: 25px;
 }
-.detailsBanner .right {
-  color: black;
-  flex-grow: 1;
-}
 .detailsBanner .right .overview {
   margin-bottom: 25px;
   color: white;

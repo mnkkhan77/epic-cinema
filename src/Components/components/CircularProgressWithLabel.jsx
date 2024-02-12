@@ -4,13 +4,21 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 const CircularProgressWithLabel = ({ value, ...props }) => {
+  let color;
+  if (value > 70) {
+    color = "green";
+  } else if (value >= 50 && value <= 70) {
+    color = "yellow";
+  } else {
+    color = "red";
+  }
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
       <CircularProgress
         aria-label="circularProgress"
         variant="determinate"
-        color="success"
-        style={{backgroundColor: "#394F8A", borderRadius: "50%"}}
+
+        style={{ backgroundColor: "#394F8A", borderRadius: "50%", color: color }}
         thickness={5}
         value={value}
         {...props}

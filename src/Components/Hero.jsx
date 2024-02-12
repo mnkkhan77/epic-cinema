@@ -1,6 +1,6 @@
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useState } from "react";
 import {
   TrendingListProvider,
   TvListProvider,
@@ -8,14 +8,23 @@ import {
 } from "./Provider/DataProvider";
 import IconBreadcrumbs from "./WithBreadcrumbs";
 import ListComponent from "./components/ListComponent";
+import Pagination from "@mui/material/Pagination";
 
 const Hero = () => {
-  const [alignment, setAlignment] = useState("All");
+  const [alignment, setAlignment] = useState(() => {
+    return sessionStorage.getItem("alignment") || "All";
+  });
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment !== null) {
       setAlignment(newAlignment);
     }
+  };
+
+  const [page, setPage] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+    console.log("value", value);
   };
 
   return (
@@ -71,6 +80,13 @@ const Hero = () => {
           )}
         />
       )}
+      <Pagination
+        sx={{ display: "flex", justifyContent: "center" }}
+        count={1000}
+        showFirstButton
+        showLastButton
+        onChange={handleChange}
+      />
     </div>
   );
 };

@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { PlayCircle } from "@mui/icons-material";
 import "./style.css";
 import {
   MovieDetailProvider,
@@ -79,8 +77,6 @@ const DescriptionPage = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const [show, setShow] = useState(false);
-  const [videoId, setVideoId] = useState(null);
   const { media_type, id } = location.state.data;
 
   const toHoursAndMinutes = (totalMinutes) => {
@@ -96,6 +92,17 @@ const DescriptionPage = () => {
       return `${hours}h ${minutes}m`;
     }
   };
+
+  const textShadowOptions = [
+    "0 0 5px #00e676bf,    0 0 10px #00e676bf,    0 0 20px #00e676bf,    0 0 40px #00e676bf,    0 0 80px #00e676bf,    0 0 90px #00e676bf,    0 0 100px #00e676bf,    0 0 150px #00e676bf",
+    "0 0 15px #00ff66",
+    "0 0 20px hsl(194, 100%, 40%), 0 0 2.5vmin hsl(194, 100%, 40%), 0 0 5vmin hsl(194, 100%, 40%), 0 0 10vmin hsl(194, 100%, 40%), 0 0 15vmin hsl(194, 100%, 40%)",
+    "0 0 20px #dd0000, 0 0 2.5vmin #dd0000, 0 0 5vmin #dd0000, 0 0 10vmin #dd0000, 0 0 15vmin #dd0000",
+    "0 0 20px #00ff66, 0 0 2.5vmin #00ff66, 0 0 5vmin #00ff66, 0 0 10vmin #00ff66, 0 0 15vmin #00ff66",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * textShadowOptions.length);
+  const randomTextShadow = textShadowOptions[randomIndex];
 
   const IMG_API = process.env.REACT_APP_IMG_API;
   return (
@@ -121,7 +128,11 @@ const DescriptionPage = () => {
                 <img
                   src={`${IMG_API}${detail?.backdrop_path}`}
                   alt="Backdrop"
-                  style={{ maxWidth: "100%", height: "auto" }}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                    marginTop: "60px",
+                  }}
                 />
               ) : (
                 <Skeleton
@@ -184,7 +195,12 @@ const DescriptionPage = () => {
                   )}
                 </div>
                 <div className="right">
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div
+                    style={{
+                      display: !isSmallScreen && "flex",
+                      alignItems: "start",
+                    }}
+                  >
                     <div
                       style={{
                         fontSize: "28px",
@@ -196,18 +212,20 @@ const DescriptionPage = () => {
                     >
                       {detail?.title || detail?.name}
                     </div>
-                    {detail?.original_name && (
-                      <div
-                        style={{
-                          fontSize: "28px",
-                          lineHeight: "40px",
-                          fontWeight: "bold",
-                          color: "white",
-                        }}
-                      >
-                        ( {detail?.original_name} )
-                      </div>
-                    )}
+                    {detail?.original_name &&
+                      detail?.name !== detail?.original_name && (
+                        <div
+                          style={{
+                            fontSize: "28px",
+                            lineHeight: "40px",
+                            fontWeight: "bold",
+                            color: "white",
+                            marginLeft: "10px",
+                          }}
+                        >
+                          ( {detail?.original_name} )
+                        </div>
+                      )}
                   </div>
 
                   <div
@@ -215,8 +233,9 @@ const DescriptionPage = () => {
                       fontSize: "16px",
                       lineHeight: "24px",
                       fontStyle: "italic",
-                      opacity: 0.5,
-                      color: "yellow",
+                      fontWeight: "bold",
+                      color: "#fff",
+                      textShadow: randomTextShadow,
                       marginBottom: detail?.created_by ? "0px" : "15px",
                     }}
                   >
@@ -264,18 +283,7 @@ const DescriptionPage = () => {
                         Not rated yet
                       </div>
                     )}
-                    {detail?.video && (
-                      <div
-                        className="playbtn"
-                        onClick={() => {
-                          setShow(true);
-                          setVideoId(detail?.video.key);
-                        }}
-                      >
-                        <PlayCircle />
-                        <span className="text">Watch Trailer</span>
-                      </div>
-                    )}
+
                     {(detail?.status === "Released" ||
                       detail?.status === "Ended" ||
                       detail?.status === "Returning Series") && (
