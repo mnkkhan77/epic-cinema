@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
@@ -12,7 +12,8 @@ import Pagination from "@mui/material/Pagination";
 
 const Hero = () => {
   const [alignment, setAlignment] = useState(() => {
-    return sessionStorage.getItem("alignment") || "All";
+    const storedAlignment = sessionStorage.getItem("alignment");
+    return storedAlignment || "All";
   });
 
   const handleAlignment = (event, newAlignment) => {
@@ -20,6 +21,9 @@ const Hero = () => {
       setAlignment(newAlignment);
     }
   };
+  useEffect(() => {
+    sessionStorage.setItem("alignment", alignment);
+  }, [alignment]);
 
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
