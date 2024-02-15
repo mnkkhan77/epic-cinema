@@ -14,6 +14,11 @@ const Years = () => {
   const handleToggle = () => {
     setOpen(!open);
   };
+  const handleYearClick = (id) => {
+    // Handle the click event for each genre
+    console.log(`Year clicked with id: ${id}`);
+    // Add your logic here
+  };
 
   return (
     <List>
@@ -48,6 +53,7 @@ const Years = () => {
                 fontSize: "12px",
                 marginRight: "3px",
               }}
+              onClick={() => handleYearClick(id)}
             >
               <ListItemButton>
                 <ListItemIcon sx={{ color: "#aaa" }}>

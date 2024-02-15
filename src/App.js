@@ -8,6 +8,11 @@ import TermsOfService from "./Pages/TermsOfServices";
 import Layout from "./Components/Layout";
 import DescriptionPage from "./Pages/DescriptionPage";
 import Reset from "./Pages/Reset";
+import Movie from "./Pages/Movie";
+import Tv from "./Pages/Tv";
+import { TopRatedProvider } from "./Components/Provider/DataProvider";
+import SearchResult from "./Pages/SearchResult";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   return (
@@ -28,6 +33,39 @@ function App() {
           </Layout>
         }
       />
+      <Route
+        path="/movie"
+        element={
+          <Layout>
+            <Movie />
+          </Layout>
+        }
+      />
+      <Route
+        path="/toprated"
+        element={
+          <Layout>
+            <TopRatedProvider />
+          </Layout>
+        }
+      />
+      <Route
+        path="/tv"
+        element={
+          <Layout>
+            <Tv />
+          </Layout>
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <Layout>
+            <SearchResult />
+          </Layout>
+        }
+      />
+      <Route component={NotFound} />
       <Route
         path="/contact"
         element={

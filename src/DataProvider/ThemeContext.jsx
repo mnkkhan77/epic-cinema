@@ -10,7 +10,7 @@ export const ThemeProvider = ({ children }) => {
     colors: {
       primary: "#007bff",
       secondary: "#555",
-      background: "#fff",
+      // background: "#fff",
       text: "#333",
     },
     // Add more theme properties as needed

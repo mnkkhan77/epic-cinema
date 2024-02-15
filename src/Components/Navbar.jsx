@@ -25,9 +25,10 @@ import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import Genre from "./components/Genre";
 import Years from "./components/Years";
-import {Link, useNavigate} from "react-router-dom";
-import { useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Logo from "../logo123.jpg";
+import { useMediaQuery } from "@mui/material";
 
 const drawerWidth = 320;
 
@@ -78,7 +79,9 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Navbar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -89,11 +92,28 @@ export default function Navbar() {
   };
 
   const handleClick = (path) => {
-    console.log('Navigating to: ', path);
-    navigate(path); // Navigate to the specified path
+    navigate(path.path);
   };
 
-    return (
+  const handleSearch = () => {
+    const formattedQuery = query.replace(/\s+/g, "%");
+    if (formattedQuery.trim() !== "") {
+      console.log("Search query:", formattedQuery);
+      navigate(`/search?query=${formattedQuery}`);
+    }
+  };
+
+  const handleChange = (event) => {
+    setQuery(event.target.value);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -152,12 +172,16 @@ export default function Navbar() {
         <List>
           {[
             { text: "Home", icon: <HomeIcon />, path: "/" },
-            { text: "Top IMDB", icon: <MovieFilterIcon />, path: "/top_imdb" },
-            { text: "Movies", icon: <MovieIcon />, path: "/movies" },
+            {
+              text: "Top Rated IMDB",
+              icon: <MovieFilterIcon />,
+              path: "/toprated",
+            },
+            { text: "Movies", icon: <MovieIcon />, path: "/movie" },
             { text: "TV Shows", icon: <TvIcon />, path: "/tv" },
-          ].map(({ text, icon , path }, index) => (
+          ].map(({ text, icon, path }, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton onClick={() => handleClick({path})}>
+              <ListItemButton onClick={() => handleClick({ path })}>
                 <ListItemIcon
                   sx={{
                     color: "#aaa",
@@ -201,7 +225,7 @@ export default function Navbar() {
                 }}
               >
                 <div>
-                  <img src={Logo} width={40} height={40} alt="Logo" />
+                  <img src={Logo} width="40vw" height="40vh" alt="Logo" />
                 </div>
                 <Typography
                   variant="h6"
@@ -224,8 +248,15 @@ export default function Navbar() {
                 px: 3,
                 width: "80%",
               }}
+              value={query}
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
             />
-            <IconButton color="inherit" aria-label="search">
+            <IconButton
+              color="inherit"
+              aria-label="search"
+              onClick={handleSearch}
+            >
               <SearchIcon />
             </IconButton>
           </Box>
@@ -236,7 +267,7 @@ export default function Navbar() {
                 startIcon={<PersonIcon />}
                 sx={{ color: "#aaa" }}
               >
-                Login
+                {isSmallScreen ? "" : "Login"}
               </Button>
             </Link>
           </Box>

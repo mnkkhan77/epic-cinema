@@ -14,7 +14,9 @@ import MatrixLoader from "../Components/components/MatrixLoader";
 const Genre = ({ data }) => {
   if (!data || data.length === 0) return null;
   return (
-    <div style={{ marginBottom: "25px", flexFlow: "row wrap", color: "white" }}>
+    <div
+      style={{ marginBottom: "25px", flexFlow: "row wrap", color: "#e9edef" }}
+    >
       {data.map((genre, index) => (
         <label
           style={{
@@ -39,9 +41,8 @@ const DetailProvider = ({ mediaType, id, children }) => {
     <MovieDetailProvider
       id={id}
       render={({ movieDetail, isLoading, isError }) => {
-        // return <MatrixLoader />;
         if (isLoading) {
-          return <MatrixLoader />;
+          return <MatrixLoader width="100%" height="100%" color="#00ff00" />;
         }
 
         if (isError) {
@@ -56,7 +57,7 @@ const DetailProvider = ({ mediaType, id, children }) => {
       id={id}
       render={({ tvDetail, isLoading, isError }) => {
         if (isLoading) {
-          return <MatrixLoader />;
+          return <MatrixLoader width="100%" height="100%" color="#00ff00" />;
         }
 
         if (isError) {
@@ -135,12 +136,7 @@ const DescriptionPage = () => {
                   }}
                 />
               ) : (
-                <Skeleton
-                  sx={{ bgcolor: "grey.900" }}
-                  variant="rectangular"
-                  width="100%"
-                  height="100%"
-                />
+                <MatrixLoader width="100%" height="100%" color="#00ff00" />
               )}
             </div>
             <div
@@ -206,7 +202,7 @@ const DescriptionPage = () => {
                         fontSize: "28px",
                         lineHeight: "40px",
                         fontWeight: "bold",
-                        color: "white",
+                        color: "#e9edef",
                         marginRight: "10px", // Adjust spacing between the two divs
                       }}
                     >
@@ -219,7 +215,7 @@ const DescriptionPage = () => {
                             fontSize: "28px",
                             lineHeight: "40px",
                             fontWeight: "bold",
-                            color: "white",
+                            color: "#e9edef",
                             marginLeft: "10px",
                           }}
                         >
@@ -234,33 +230,35 @@ const DescriptionPage = () => {
                       lineHeight: "24px",
                       fontStyle: "italic",
                       fontWeight: "bold",
-                      color: "#fff",
+                      color: "#e9edef",
                       textShadow: randomTextShadow,
                       marginBottom: detail?.created_by ? "0px" : "15px",
                     }}
                   >
                     {detail?.tagline}
                   </div>
-                  {detail?.created_by && (
+
+                  {detail?.created_by?.length > 0 && (
                     <div
                       style={{
-                        color: "#fff",
+                        color: "#e9edef",
                         fontSize: "0.8em",
                         marginBottom: "15px",
                         borderRadius: "10%",
                         padding: "1px 5px 1px",
                       }}
                     >
-                      ( Created By :{" "}
-                      {detail?.created_by?.map((cby, index, array) => {
-                        if (index === array.length - 1) {
-                          return cby.name;
-                        } else if (index === array.length - 2) {
-                          return `${cby.name} and `;
-                        } else {
-                          return `${cby.name}, `;
-                        }
-                      })}{" "}
+                      ( Created By:{" "}
+                      {detail?.created_by.map((cby, index) => (
+                        <span key={index}>
+                          {index > 0
+                            ? index === detail?.created_by.length - 1
+                              ? " and "
+                              : ", "
+                            : ""}
+                          {cby.name}
+                        </span>
+                      ))}{" "}
                       )
                     </div>
                   )}
@@ -275,7 +273,7 @@ const DescriptionPage = () => {
                     ) : (
                       <div
                         style={{
-                          color: "white",
+                          color: "#e9edef",
                           textShadow:
                             "0 0 5px #fff, 0 0 10px #fff, 0 0 15px #b92eff, 0 0 20px #b92eff, 0 0 25px #b92eff, 0 0 30px #b92eff, 0 0 35px #b92eff",
                         }}
@@ -289,7 +287,7 @@ const DescriptionPage = () => {
                       detail?.status === "Returning Series") && (
                       <label
                         style={{
-                          color: "#fff",
+                          color: "#e9edef",
                           backgroundColor: "#dd0000",
                           borderRadius: "10%",
                           fontWeight: "bold",
@@ -348,7 +346,10 @@ const DescriptionPage = () => {
 
                   <div className="overview">
                     <div className="heading">Overview</div>
-                    <Divider sx={{ marginBottom: "10px" }} />
+                    <Divider
+                      variant="inset"
+                      sx={{ marginBottom: "10px", borderColor: "#ff0000" }}
+                    />
                     <div className="description">{detail?.overview}</div>
                   </div>
 
@@ -356,12 +357,18 @@ const DescriptionPage = () => {
                     {detail?.status && (
                       <div className="infoItem">
                         <span className="text bold">Status: </span>
+                        <Divider
+                          sx={{ borderColor: "#ff0000", borderWidth: "1px" }}
+                        />
                         <span className="text">{detail?.status}</span>
                       </div>
                     )}
                     {(detail?.release_date || detail?.first_air_date) && (
                       <div className="infoItem">
                         <span className="text bold">Release Date: </span>
+                        <Divider
+                          sx={{ borderColor: "#ff0000", borderWidth: "1px" }}
+                        />
                         <span className="text">
                           {new Date(
                             detail?.release_date || detail?.first_air_date
@@ -378,6 +385,9 @@ const DescriptionPage = () => {
                         detail.episode_run_time.length > 0)) && (
                       <div className="infoItem">
                         <span className="text bold">Runtime: </span>
+                        <Divider
+                          sx={{ borderColor: "#ff0000", borderWidth: "1px" }}
+                        />
                         <span className="text">
                           {toHoursAndMinutes(detail?.runtime) ||
                             toHoursAndMinutes(

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Divider, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
   TrendingListProvider,
   TvListProvider,
@@ -33,7 +33,12 @@ const Hero = () => {
 
   return (
     <div>
-      <div style={{ paddingLeft: "30px", paddingTop: "30px" }}>
+      <div
+        style={{
+          paddingLeft: "30px",
+          backgroundColor: "#282828",
+        }}
+      >
         <IconBreadcrumbs />
       </div>
       <div
@@ -42,27 +47,36 @@ const Hero = () => {
           justifyContent: "flex-start",
           alignItems: "center",
           paddingTop: "10px",
+          backgroundColor: "#202c33",
         }}
       >
         <Typography
           variant="h6"
-          style={{ marginRight: "30px", paddingLeft: "30px" }}
+          style={{ marginRight: "30px", paddingLeft: "30px", color: "#e9edef" }}
         >
           Trending
         </Typography>
 
         <ToggleButtonGroup
           color="primary"
+          sx={{ backgroundColor: "#282828" }}
           value={alignment}
           exclusive
           onChange={handleAlignment}
           aria-label="Platform"
         >
-          <ToggleButton value="All">All</ToggleButton>
-          <ToggleButton value="Movies">Movies</ToggleButton>
-          <ToggleButton value="Tv">Tv</ToggleButton>
+          <ToggleButton value="All" sx={{ color: "#e9edef" }}>
+            All
+          </ToggleButton>
+          <ToggleButton value="Movies" sx={{ color: "#e9edef" }}>
+            Movies
+          </ToggleButton>
+          <ToggleButton value="Tv" sx={{ color: "#e9edef" }}>
+            Tv
+          </ToggleButton>
         </ToggleButtonGroup>
       </div>
+      <Divider sx={{ borderColor: "#686868" }} />
       {alignment === "All" && (
         <TrendingListProvider
           render={({ trending, isError }) => (

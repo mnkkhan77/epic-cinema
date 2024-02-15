@@ -12,7 +12,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import Skeleton from "@mui/material/Skeleton";
+import MatrixLoader from "./components/MatrixLoader";
 
 const HoverCardMedia = styled(CardMedia)({
   position: "relative",
@@ -36,7 +36,7 @@ const CardComponents = ({
 }) => {
   const truncatedDescription = useMemo(
     () =>
-      description.length > 70 ? `${description.slice(0, 50)}...` : description,
+      description?.length > 70 ? `${description.slice(0, 50)}...` : description,
     [description]
   );
   const truncatedTitle = useMemo(
@@ -52,10 +52,7 @@ const CardComponents = ({
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
 
   let cardWidth, cardHeight;
-  if (isSmallScreen || isMediumScreen) {
-    cardWidth = "100%";
-    cardHeight = "auto";
-  } else if (isLargeScreen) {
+  if (isSmallScreen || isMediumScreen || isLargeScreen) {
     cardWidth = "100%";
     cardHeight = "100%";
   }
@@ -86,6 +83,7 @@ const CardComponents = ({
         border: "2px",
         borderColor: "purple",
         borderStyle: "solid",
+        backgroundColor: "#0b202a",
       }}
     >
       {imageUrl ? (
@@ -102,12 +100,15 @@ const CardComponents = ({
             transition: "filter 0.3s",
           }}
         >
-          <img
-            onClick={handleClick}
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-            src={imageUrl}
-            alt={title}
-          />
+          {imageUrl && (
+            <img
+              onClick={handleClick}
+              style={{ width: "100%", height: "100%" }}
+              src={imageUrl}
+              alt={title}
+            />
+          )}
+
           {isHovered && (
             <PlayCircleFilledWhiteRoundedIcon
               onClick={handleClick}
@@ -116,14 +117,14 @@ const CardComponents = ({
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                color: "#fff",
+                color: "#e9edef",
                 fontSize: "60px",
               }}
             />
           )}
         </HoverCardMedia>
       ) : (
-        <Skeleton variant="rectangular" width={210} height={60} />
+        <MatrixLoader width="100%" height="100%" color="#00ff00" />
       )}
       <CardContent sx={cardContentStyle}>
         <div>
@@ -132,7 +133,7 @@ const CardComponents = ({
             placement="top"
             leaveDelay={200}
             arrow
-            style={{ color: "black" }}
+            style={{ color: "#e9edef" }}
           >
             <Typography
               gutterBottom
@@ -145,6 +146,7 @@ const CardComponents = ({
                 textOverflow: "ellipsis",
                 borderBlock: "solid",
                 borderBlockColor: "#6200EA",
+                color: "#e9edef",
               }}
             >
               {truncatedTitle || name || "No Title"}
@@ -157,7 +159,7 @@ const CardComponents = ({
             placement="top-start"
             leaveDelay={200}
             arrow
-            style={{ color: "black" }}
+            style={{ color: "#e9edef" }}
           >
             <Typography variant="body2" color="text.secondary">
               {truncatedDescription}

@@ -46,17 +46,28 @@ const renderMatrix = (canvas, color) => {
   return render;
 };
 
-const MatrixLoader = (props) => {
+const MatrixLoader = ({ width, height, color }) => {
   const canvasRef = useRef();
   useEffect(() => {
     const canvas = canvasRef.current;
-    const render = renderMatrix(canvas, props.color);
+    const render = renderMatrix(canvas, color);
     const intervalId = setInterval(render, 30);
     return () => clearInterval(intervalId);
-  }, [props.color]);
+  }, [color]);
 
   return (
-    <canvas ref={canvasRef} style={{ position: "fixed", top: 0, left: 0 }} />
+    <div style={{ width, height, position: "relative" }}>
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    </div>
   );
 };
 

@@ -22,7 +22,9 @@ const useDataProvider = (url) => {
       } else {
         try {
           const result = await axios(url);
-          const responseData = result.data.results ? result.data.results : result.data;
+          const responseData = result.data.results
+            ? result.data.results
+            : result.data;
           setData(responseData);
           cache[url] = responseData;
         } catch (error) {
@@ -76,9 +78,9 @@ export const TvListProvider = ({ render }) => {
 };
 
 export const TopRatedProvider = ({ render }) => {
-  const url_top_rated = `${BASE_URL}/3/movie/top_rated?api_key=${API_KEY}`;
+  const url_topRated = `${BASE_URL}/3/movie/top_rated?api_key=${API_KEY}`;
 
-  const { data: topRated, isLoading, isError } = useDataProvider(url_top_rated);
+  const { data: topRated, isLoading, isError } = useDataProvider(url_topRated);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -97,12 +99,11 @@ export const MovieDetailProvider = ({ id, render }) => {
   } = useDataProvider(url_movie_detail);
 
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        {render({ movieDetail, isLoading, isError })}
-      </Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ movieDetail, isLoading, isError })}
+    </Suspense>
   );
 };
-
 
 export const TvDetailProvider = ({ id, render }) => {
   const url_tv_detail = `${BASE_URL}/3/tv/${id}?api_key=${API_KEY}`;
@@ -112,6 +113,18 @@ export const TvDetailProvider = ({ id, render }) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       {render({ tvDetail, isLoading, isError })}
+    </Suspense>
+  );
+};
+
+export const SearchListProvider = ({ query, render }) => {
+  const url_search = `${BASE_URL}/3/search/multi?query=${query}&include_adult=false&language=en-US&page=1&api_key=${API_KEY}`;
+
+  const { data: search, isLoading, isError } = useDataProvider(url_search);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      {render({ search, isLoading, isError })}
     </Suspense>
   );
 };
