@@ -1,18 +1,18 @@
 import "./App.css";
-import SignInSide from "./Pages/SignIn";
-import Home from "./Pages/Home";
-import About from "./Pages/About";
+import SignInSide from "./Pages/auth/SignIn";
+import Home from "./Pages/public/Home";
+import About from "./Pages/public/About";
 import { Routes, Route } from "react-router-dom";
-import SignUp from "./Pages/SignUp";
-import TermsOfService from "./Pages/TermsOfServices";
-import Layout from "./Components/Layout";
-import DescriptionPage from "./Pages/DescriptionPage";
-import Reset from "./Pages/Reset";
-import Movie from "./Pages/Movie";
-import Tv from "./Pages/Tv";
-import { TopRatedProvider } from "./Components/Provider/DataProvider";
-import SearchResult from "./Pages/SearchResult";
-import NotFound from "./Pages/NotFound";
+import SignUp from "./Pages/auth/SignUp";
+import TermsOfService from "./Pages/public/TermsOfServices";
+import Layout from "./components/ui/Layout";
+import DescriptionPage from "./Pages/top/DescriptionPage";
+import Reset from "./Pages/auth/Reset";
+import Movie from "./Pages/top/Movie";
+import Tv from "./Pages/top/Tv";
+import { TopRatedProvider } from "./components/Provider/DataProvider";
+import SearchResult from "./Pages/top/SearchResult";
+import NotFound from "./Pages/public/NotFound";
 
 function App() {
   return (

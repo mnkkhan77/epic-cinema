@@ -23,11 +23,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
 import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
-import Genre from "./components/Genre";
-import Years from "./components/Years";
+import Genre from "../helpers/Genre";
+import Years from "../helpers/Years";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Logo from "../logo123.jpg";
+import Logo from "../../logo123.jpg";
 import { useMediaQuery } from "@mui/material";
 
 const drawerWidth = 320;
@@ -82,23 +82,26 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [showOverlay, setShowOverlay] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    setShowOverlay(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setShowOverlay(false);
   };
 
   const handleClick = (path) => {
     navigate(path.path);
+    handleDrawerClose();
   };
 
   const handleSearch = () => {
     const formattedQuery = query.replace(/\s+/g, "%");
     if (formattedQuery.trim() !== "") {
-      console.log("Search query:", formattedQuery);
       navigate(`/search?query=${formattedQuery}`);
     }
   };
@@ -158,7 +161,24 @@ export default function Navbar() {
         variant="persistent"
         anchor="left"
         open={open}
+        onClose={handleDrawerClose}
+        ModalProps={{ disablePortal: true }}
       >
+        {showOverlay && (
+          <Box
+            sx={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
+              // zIndex: 1200, // Ensure it's above the drawer
+            }}
+            onClick={handleDrawerClose} // Close drawer when overlay is clicked
+          />
+        )}
+
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (

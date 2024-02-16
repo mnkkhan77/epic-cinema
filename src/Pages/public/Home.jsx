@@ -1,6 +1,6 @@
 import React from "react";
-import Hero from "../Components/Hero";
-import WithBreadcrumbs from "../Components/WithBreadcrumbs";
+import Hero from "../../components/ui/Hero";
+import WithBreadcrumbs from "../../components/ui/WithBreadcrumbs";
 
 function Home() {
   return (

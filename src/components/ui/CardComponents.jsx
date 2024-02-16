@@ -12,7 +12,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import ShareIcon from "@mui/icons-material/Share";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import MatrixLoader from "./components/MatrixLoader";
+import MatrixLoader from "../helpers/MatrixLoader";
 
 const HoverCardMedia = styled(CardMedia)({
   position: "relative",
@@ -124,7 +124,12 @@ const CardComponents = ({
           )}
         </HoverCardMedia>
       ) : (
-        <MatrixLoader width="100%" height="100%" color="#00ff00" />
+        <MatrixLoader
+          width="100%"
+          height="18vh"
+          color="#00ff00"
+          position="absolute"
+        />
       )}
       <CardContent sx={cardContentStyle}>
         <div>

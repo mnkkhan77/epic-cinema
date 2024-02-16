@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import CardComponents from "../CardComponents";
+import CardComponents from "../ui/CardComponents";
 
 const commonStyles = {
   width: "100%",

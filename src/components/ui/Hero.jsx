@@ -5,9 +5,9 @@ import {
   TrendingListProvider,
   TvListProvider,
   MovieListProvider,
-} from "./Provider/DataProvider";
+} from "../Provider/DataProvider";
 import IconBreadcrumbs from "./WithBreadcrumbs";
-import ListComponent from "./components/ListComponent";
+import ListComponent from "../helpers/ListComponent";
 import Pagination from "@mui/material/Pagination";
 
 const Hero = () => {
@@ -28,7 +28,6 @@ const Hero = () => {
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
     setPage(value);
-    console.log("value", value);
   };
 
   return (
@@ -79,6 +78,7 @@ const Hero = () => {
       <Divider sx={{ borderColor: "#686868" }} />
       {alignment === "All" && (
         <TrendingListProvider
+            page={page}
           render={({ trending, isError }) => (
             <ListComponent data={trending} isError={isError} />
           )}
@@ -86,6 +86,8 @@ const Hero = () => {
       )}
       {alignment === "Movies" && (
         <MovieListProvider
+            page={page
+            }
           render={({ movie, isError }) => (
             <ListComponent data={movie} isError={isError} />
           )}
@@ -93,18 +95,23 @@ const Hero = () => {
       )}
       {alignment === "Tv" && (
         <TvListProvider
+            page={page}
           render={({ tv, isError }) => (
             <ListComponent data={tv} isError={isError} />
           )}
         />
       )}
+        <div style={{backgroundColor: "#3e448b"}}>
       <Pagination
-        sx={{ display: "flex", justifyContent: "center" }}
-        count={1000}
-        showFirstButton
-        showLastButton
-        onChange={handleChange}
+          sx={{ display: "flex", justifyContent: "center" }}
+          count={500}
+          color="primary"
+          size="large"
+          siblingCount={0}
+          boundaryCount={1}
+          onChange={handleChange}
       />
+        </div>
     </div>
   );
 };

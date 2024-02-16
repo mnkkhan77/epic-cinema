@@ -5,18 +5,19 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import yearsData from "../../DataProvider/years.json";
+import genresData from "../../data/genre.json";
 import { useState } from "react";
 
-const Years = () => {
+const Genre = () => {
   const [open, setOpen] = useState(false);
 
   const handleToggle = () => {
     setOpen(!open);
   };
-  const handleYearClick = (id) => {
+
+  const handleGenreClick = (id) => {
     // Handle the click event for each genre
-    console.log(`Year clicked with id: ${id}`);
+    console.log(`Genre clicked with id: ${id}`);
     // Add your logic here
   };
 
@@ -31,7 +32,7 @@ const Years = () => {
               <ExpandMoreIcon sx={{ color: "#aaa" }} />
             )}
           </ListItemIcon>
-          <ListItemText primary="Years" />
+          <ListItemText primary="Genre" />
         </ListItemButton>
       </ListItem>
       {open && (
@@ -44,7 +45,7 @@ const Years = () => {
           }}
         >
           {/* Render genres dynamically from the JSON data */}
-          {yearsData.map(({ id, year }) => (
+          {genresData.map(({ id, name }) => (
             <ListItem
               key={id}
               disablePadding
@@ -53,13 +54,11 @@ const Years = () => {
                 fontSize: "12px",
                 marginRight: "3px",
               }}
-              onClick={() => handleYearClick(id)}
+              onClick={() => handleGenreClick(id)}
             >
               <ListItemButton>
-                <ListItemIcon sx={{ color: "#aaa" }}>
-                  {/* Add icon if needed */}
-                </ListItemIcon>
-                <ListItemText primary={year} />
+                <ListItemIcon sx={{ color: "#aaa" }} />
+                <ListItemText primary={name} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -69,4 +68,4 @@ const Years = () => {
   );
 };
 
-export default Years;
+export default Genre;

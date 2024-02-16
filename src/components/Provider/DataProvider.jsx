@@ -41,8 +41,8 @@ const useDataProvider = (url) => {
   return { data, isLoading, error };
 };
 
-export const MovieListProvider = ({ render }) => {
-  const url_movie = `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}`;
+export const MovieListProvider = ({ render, page }) => {
+  const url_movie = `${BASE_URL}/3/trending/movie/day?api_key=${API_KEY}&page=${page}`;
 
   const { data: movie, isLoading, isError } = useDataProvider(url_movie);
 
@@ -53,8 +53,8 @@ export const MovieListProvider = ({ render }) => {
   );
 };
 
-export const TrendingListProvider = ({ render }) => {
-  const url_trending = `${BASE_URL}/3/trending/all/day?api_key=${API_KEY}`;
+export const TrendingListProvider = ({ render, page }) => {
+  const url_trending = `${BASE_URL}/3/trending/all/day?api_key=${API_KEY}&page=${page}`;
 
   const { data: trending, isLoading, isError } = useDataProvider(url_trending);
 
@@ -65,8 +65,8 @@ export const TrendingListProvider = ({ render }) => {
   );
 };
 
-export const TvListProvider = ({ render }) => {
-  const url_tv = `${BASE_URL}/3/trending/tv/day?api_key=${API_KEY}`;
+export const TvListProvider = ({ render, page }) => {
+  const url_tv = `${BASE_URL}/3/trending/tv/day?api_key=${API_KEY}&page=${page}`;
 
   const { data: tv, isLoading, isError } = useDataProvider(url_tv);
 
@@ -77,8 +77,8 @@ export const TvListProvider = ({ render }) => {
   );
 };
 
-export const TopRatedProvider = ({ render }) => {
-  const url_topRated = `${BASE_URL}/3/movie/top_rated?api_key=${API_KEY}`;
+export const TopRatedProvider = ({ render, page }) => {
+  const url_topRated = `${BASE_URL}/3/movie/top_rated?api_key=${API_KEY}&page=${page}`;
 
   const { data: topRated, isLoading, isError } = useDataProvider(url_topRated);
 
@@ -89,7 +89,7 @@ export const TopRatedProvider = ({ render }) => {
   );
 };
 
-export const MovieDetailProvider = ({ id, render }) => {
+export const MovieDetailProvider = ({ id, render}) => {
   const url_movie_detail = `${BASE_URL}/3/movie/${id}?api_key=${API_KEY}`;
 
   const {
@@ -117,8 +117,8 @@ export const TvDetailProvider = ({ id, render }) => {
   );
 };
 
-export const SearchListProvider = ({ query, render }) => {
-  const url_search = `${BASE_URL}/3/search/multi?query=${query}&include_adult=false&language=en-US&page=1&api_key=${API_KEY}`;
+export const SearchListProvider = ({ query, render, page }) => {
+  const url_search = `${BASE_URL}/3/search/multi?query=${query}&include_adult=false&api_key=${API_KEY}&page=${page}`;
 
   const { data: search, isLoading, isError } = useDataProvider(url_search);
 

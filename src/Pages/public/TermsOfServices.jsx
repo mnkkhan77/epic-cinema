@@ -1,4 +1,4 @@
-import WithBreadcrumbs from "../Components/WithBreadcrumbs";
+import WithBreadcrumbs from "../../components/ui/WithBreadcrumbs";
 
 const TermsOfServices = () => {
   const styles = {

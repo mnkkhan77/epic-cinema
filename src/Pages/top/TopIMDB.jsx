@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { MovieListProvider } from "../Components/Provider/DataProvider";
-import ListComponent from "../Components/components/ListComponent";
+import { TopRatedProvider } from "../../components/Provider/DataProvider";
+import ListComponent from "../../components/helpers/ListComponent";
 import Pagination from "@mui/material/Pagination";
 
-const Movie = () => {
+const TopIMDB = () => {
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
     setPage(value);
-    console.log("value", value);
   };
   return (
     <div style={{ marginTop: "30px" }}>
@@ -19,11 +18,12 @@ const Movie = () => {
           textDecoration: "underline",
         }}
       >
-        Movies
+        Top Rated
       </div>
-      <MovieListProvider
-        render={({ movie, isError }) => (
-          <ListComponent data={movie} isError={isError} />
+      <TopRatedProvider
+        page={page}
+        render={({ topRated, isError }) => (
+          <ListComponent data={topRated} isError={isError} />
         )}
       />
       <Pagination
@@ -31,10 +31,11 @@ const Movie = () => {
         count={1000}
         showFirstButton
         showLastButton
+        color="primary"
         onChange={handleChange}
       />
     </div>
   );
 };
 
-export default Movie;
+export default TopIMDB;

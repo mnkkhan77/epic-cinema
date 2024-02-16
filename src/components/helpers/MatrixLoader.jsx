@@ -46,7 +46,7 @@ const renderMatrix = (canvas, color) => {
   return render;
 };
 
-const MatrixLoader = ({ width, height, color }) => {
+const MatrixLoader = ({ width, height, color, position }) => {
   const canvasRef = useRef();
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -60,13 +60,27 @@ const MatrixLoader = ({ width, height, color }) => {
       <canvas
         ref={canvasRef}
         style={{
-          position: "absolute",
+          position: position,
           top: 0,
           left: 0,
           width: "100%",
           height: "100%",
         }}
       />
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          color: "#fff",
+          fontSize: "30px",
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
+        Something went wrong
+      </div>
     </div>
   );
 };

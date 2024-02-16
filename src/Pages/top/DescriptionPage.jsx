@@ -1,15 +1,15 @@
 import { useLocation } from "react-router-dom";
-import "./style.css";
+import "../style.css";
 import {
   MovieDetailProvider,
   TvDetailProvider,
-} from "../Components/Provider/DataProvider";
-import CircularWithValueLabel from "../Components/components/CircularProgressWithLabel";
+} from "../../components/Provider/DataProvider";
+import CircularWithValueLabel from "../../components/helpers/CircularProgressWithLabel";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import Skeleton from "@mui/material/Skeleton";
-import MatrixLoader from "../Components/components/MatrixLoader";
+import MatrixLoader from "../../components/helpers/MatrixLoader";
 
 const Genre = ({ data }) => {
   if (!data || data.length === 0) return null;
@@ -42,7 +42,14 @@ const DetailProvider = ({ mediaType, id, children }) => {
       id={id}
       render={({ movieDetail, isLoading, isError }) => {
         if (isLoading) {
-          return <MatrixLoader width="100%" height="100%" color="#00ff00" />;
+          return (
+            <MatrixLoader
+              width="100%"
+              height="100%"
+              color="#00ff00"
+              position="relative"
+            />
+          );
         }
 
         if (isError) {
@@ -77,8 +84,9 @@ const DescriptionPage = () => {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-  const { media_type, id } = location.state.data;
+  const { media_type, id } = location?.state?.data;
 
   const toHoursAndMinutes = (totalMinutes) => {
     if (!totalMinutes || isNaN(totalMinutes)) {
@@ -169,7 +177,11 @@ const DescriptionPage = () => {
                 <div
                   style={{
                     flexShrink: "0",
-                    width: isSmallScreen ? "200px" : "350px",
+                    width: isSmallScreen
+                      ? "200px"
+                      : isMediumScreen
+                      ? "270px"
+                      : "350px",
                     fontWeight: "bold",
                     display: "block",
                   }}
@@ -266,7 +278,7 @@ const DescriptionPage = () => {
                   <Genre data={detail?.genres?.map((g) => g.name)} />
 
                   <div className="row">
-                    {detail?.vote_average !== 0 ? (
+                    {detail?.vote_average && detail?.vote_average !== 0 ? (
                       <CircularWithValueLabel
                         progress={detail?.vote_average * 10}
                       />
