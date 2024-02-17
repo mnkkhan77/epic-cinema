@@ -3,12 +3,19 @@ import { TvListProvider } from "../../components/Provider/DataProvider";
 import ListComponent from "../../components/helpers/ListComponent";
 import Pagination from "@mui/material/Pagination";
 import { Typography } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Tv = () => {
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pageQuery = new URLSearchParams(location.search).get("page");
+  const [page, setPage] = useState(pageQuery ? parseInt(pageQuery, 10) : 1);
+
   const handleChange = (event, value) => {
     setPage(value);
+    navigate(`/tv?page=${value}`);
   };
+
   return (
     <div style={{ marginTop: "15px" }}>
       <Typography
@@ -30,8 +37,8 @@ const Tv = () => {
           <ListComponent data={tv} isError={isError} />
         )}
       />
-        <div style={{backgroundColor: "#3e448b"}}>
-      <Pagination
+      <div style={{ backgroundColor: "#3e448b" }}>
+        <Pagination
           sx={{ display: "flex", justifyContent: "center" }}
           count={500}
           color="primary"
@@ -39,8 +46,9 @@ const Tv = () => {
           siblingCount={0}
           boundaryCount={1}
           onChange={handleChange}
-      />
-        </div>
+          page={page}
+        />
+      </div>
     </div>
   );
 };

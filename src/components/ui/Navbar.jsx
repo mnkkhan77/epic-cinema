@@ -17,7 +17,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import MovieIcon from "@mui/icons-material/Movie";
-import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import TvIcon from "@mui/icons-material/Tv";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase } from "@mui/material";
@@ -29,6 +28,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Logo from "../../logo123.jpg";
 import { useMediaQuery } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 
 const drawerWidth = 320;
 
@@ -83,6 +83,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [showOverlay, setShowOverlay] = useState(false);
+  const [isSearchBarOPen, setIsSearchBarOPen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,10 +105,18 @@ export default function Navbar() {
     if (formattedQuery.trim() !== "") {
       navigate(`/search?query=${formattedQuery}`);
     }
+    setIsSearchBarOPen(false);
   };
 
   const handleChange = (event) => {
     setQuery(event.target.value);
+  };
+
+  const handleSearchBarOpen = () => {
+    setIsSearchBarOPen(true);
+  };
+  const handleSearchBarClose = () => {
+    setIsSearchBarOPen(false);
   };
 
   const handleKeyPress = (event) => {
@@ -119,34 +128,173 @@ export default function Navbar() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Link
-            to="/"
-            style={{
-              textDecoration: "none",
-            }}
-          >
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ color: "#aaa" }}
+
+      {isSearchBarOPen ? (
+        <AppBar
+          position="fixed"
+          style={{ zIndex: 1400, backgroundColor: "#282828" }}
+        >
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="back"
+              onClick={handleSearchBarClose}
             >
-              Epic Cinema
-            </Typography>
-          </Link>
-        </Toolbar>
-      </AppBar>
+              <ArrowBack />
+            </IconButton>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                position: "relative",
+                borderRadius: 4,
+                backgroundColor: "#000",
+                marginRight: 16,
+                marginLeft: 0,
+                width: "90%",
+              }}
+            >
+              <InputBase
+                placeholder="Search…"
+                style={{
+                  color: "inherit",
+                  paddingLeft: "48px",
+                }}
+                inputProps={{ "aria-label": "search" }}
+                value={query}
+                onChange={handleChange}
+                onKeyPress={handleKeyPress}
+                fullWidth
+              />
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="search"
+                onClick={handleSearch}
+                style={{ position: "absolute", right: 10 }}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+      ) : (
+        <>
+          <AppBar position="fixed" open={open}>
+            <Toolbar>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{ mr: 2, ...(open && { display: "none" }) }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ color: "#aaa" }}
+                >
+                  Epic Cinema
+                </Typography>
+              </Link>
+            </Toolbar>
+          </AppBar>
+          <AppBar position="fixed" open={open}>
+            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  edge="start"
+                  sx={{ mr: 2, ...(open && { display: "none" }) }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Link
+                  to="/"
+                  style={{
+                    textDecoration: "none",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: "10px",
+                    }}
+                  >
+                    <div>
+                      <img src={Logo} width="40vw" height="40vh" alt="Logo" />
+                    </div>
+                    <Typography
+                      variant="h6"
+                      noWrap
+                      component="div"
+                      sx={{ color: "#aaa", marginRight: "10px" }}
+                    >
+                      Epic Cinema
+                    </Typography>
+                  </div>
+                </Link>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  width: "60%",
+                }}
+              >
+                {!isSmallScreen && (
+                  <InputBase
+                    placeholder="Search..."
+                    inputProps={{ "aria-label": "search" }}
+                    sx={{
+                      backgroundColor: "#000",
+                      color: "#aaa",
+                      px: 3,
+                      width: "80%",
+                    }}
+                    value={query}
+                    onChange={handleChange}
+                    onKeyPress={handleKeyPress}
+                  />
+                )}
+                <IconButton
+                  color="inherit"
+                  aria-label="search"
+                  onClick={!isSmallScreen ? handleSearch : handleSearchBarOpen}
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Link to="/log_in">
+                  <Button
+                    color="inherit"
+                    startIcon={<PersonIcon />}
+                    sx={{ color: "#aaa" }}
+                  >
+                    {isSmallScreen ? "" : "Login"}
+                  </Button>
+                </Link>
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </>
+      )}
+
       <Drawer
         sx={{
           width: drawerWidth,
@@ -192,11 +340,11 @@ export default function Navbar() {
         <List>
           {[
             { text: "Home", icon: <HomeIcon />, path: "/" },
-            {
-              text: "Top Rated IMDB",
-              icon: <MovieFilterIcon />,
-              path: "/toprated",
-            },
+            // {
+            //   text: "Top Rated IMDB",
+            //   icon: <MovieFilterIcon />,
+            //   path: "/toprated",
+            // },
             { text: "Movies", icon: <MovieIcon />, path: "/movie" },
             { text: "TV Shows", icon: <TvIcon />, path: "/tv" },
           ].map(({ text, icon, path }, index) => (
@@ -219,80 +367,6 @@ export default function Navbar() {
         <Divider style={{ background: "#424242" }} />
         <Years />
       </Drawer>
-      <AppBar position="fixed" open={open}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }) }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Link
-              to="/"
-              style={{
-                textDecoration: "none",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginRight: "10px",
-                }}
-              >
-                <div>
-                  <img src={Logo} width="40vw" height="40vh" alt="Logo" />
-                </div>
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{ color: "#aaa", marginRight: "10px" }}
-                >
-                  Epic Cinema
-                </Typography>
-              </div>
-            </Link>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center", width: "60%" }}>
-            <InputBase
-              placeholder="Search..."
-              inputProps={{ "aria-label": "search" }}
-              sx={{
-                backgroundColor: "#000",
-                color: "#aaa",
-                px: 3,
-                width: "80%",
-              }}
-              value={query}
-              onChange={handleChange}
-              onKeyPress={handleKeyPress}
-            />
-            <IconButton
-              color="inherit"
-              aria-label="search"
-              onClick={handleSearch}
-            >
-              <SearchIcon />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Link to="/log_in">
-              <Button
-                color="inherit"
-                startIcon={<PersonIcon />}
-                sx={{ color: "#aaa" }}
-              >
-                {isSmallScreen ? "" : "Login"}
-              </Button>
-            </Link>
-          </Box>
-        </Toolbar>
-      </AppBar>
       <Main open={open}>
         <DrawerHeader />
       </Main>
