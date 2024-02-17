@@ -1,6 +1,5 @@
 import { styled } from "@mui/system";
 import ContactForm from "../../components/ui/ContactForm";
-import WithBreadcrumbs from "../../components/ui/WithBreadcrumbs";
 
 const StyledAboutContainer = styled("div")({
   maxWidth: "800px",
@@ -58,4 +57,4 @@ const About = () => {
   );
 };
 
-export default WithBreadcrumbs(About);
+export default About;

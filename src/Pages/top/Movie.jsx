@@ -42,7 +42,7 @@ const Movie = () => {
           count={500}
           color="primary"
           size="large"
-          siblingCount={0}
+          siblingCount={1}
           boundaryCount={1}
           onChange={handleChange}
           page={page}

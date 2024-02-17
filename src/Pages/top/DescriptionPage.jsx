@@ -206,6 +206,7 @@ const DescriptionPage = () => {
                   <div
                     style={{
                       display: !isSmallScreen && "flex",
+                      flexWrap: !isSmallScreen && "wrap",
                       alignItems: "start",
                     }}
                   >

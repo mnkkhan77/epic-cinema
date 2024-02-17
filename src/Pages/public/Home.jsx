@@ -1,6 +1,5 @@
 import React from "react";
 import Hero from "../../components/ui/Hero";
-import WithBreadcrumbs from "../../components/ui/WithBreadcrumbs";
 
 function Home() {
   return (
@@ -10,4 +9,4 @@ function Home() {
   );
 }
 
-export default WithBreadcrumbs(Home);
+export default Home;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import { Divider, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
@@ -6,11 +7,20 @@ import {
   TvListProvider,
   MovieListProvider,
 } from "../Provider/DataProvider";
-import IconBreadcrumbs from "./WithBreadcrumbs";
 import ListComponent from "../helpers/ListComponent";
 import Pagination from "@mui/material/Pagination";
 
 const Hero = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pageQuery = new URLSearchParams(location.search).get("page");
+  const [page, setPage] = useState(pageQuery ? parseInt(pageQuery, 10) : 1);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+    navigate(`/trending?page=${value}`);
+  };
+
   const [alignment, setAlignment] = useState(() => {
     const storedAlignment = sessionStorage.getItem("alignment");
     return storedAlignment || "All";
@@ -25,21 +35,8 @@ const Hero = () => {
     sessionStorage.setItem("alignment", alignment);
   }, [alignment]);
 
-  const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
-
   return (
     <div>
-      <div
-        style={{
-          paddingLeft: "30px",
-          backgroundColor: "#282828",
-        }}
-      >
-        <IconBreadcrumbs />
-      </div>
       <div
         style={{
           display: "flex",
@@ -67,8 +64,8 @@ const Hero = () => {
           <ToggleButton value="All" sx={{ color: "#e9edef" }}>
             All
           </ToggleButton>
-          <ToggleButton value="Movies" sx={{ color: "#e9edef" }}>
-            Movies
+          <ToggleButton value="Movie" sx={{ color: "#e9edef" }}>
+            Movie
           </ToggleButton>
           <ToggleButton value="Tv" sx={{ color: "#e9edef" }}>
             Tv
@@ -78,16 +75,15 @@ const Hero = () => {
       <Divider sx={{ borderColor: "#686868" }} />
       {alignment === "All" && (
         <TrendingListProvider
-            page={page}
+          page={page}
           render={({ trending, isError }) => (
             <ListComponent data={trending} isError={isError} />
           )}
         />
       )}
-      {alignment === "Movies" && (
+      {alignment === "Movie" && (
         <MovieListProvider
-            page={page
-            }
+          page={page}
           render={({ movie, isError }) => (
             <ListComponent data={movie} isError={isError} />
           )}
@@ -95,23 +91,24 @@ const Hero = () => {
       )}
       {alignment === "Tv" && (
         <TvListProvider
-            page={page}
+          page={page}
           render={({ tv, isError }) => (
             <ListComponent data={tv} isError={isError} />
           )}
         />
       )}
-        <div style={{backgroundColor: "#3e448b"}}>
-      <Pagination
+      <div style={{ backgroundColor: "#3e448b" }}>
+        <Pagination
           sx={{ display: "flex", justifyContent: "center" }}
           count={500}
           color="primary"
           size="large"
-          siblingCount={0}
+          siblingCount={1}
           boundaryCount={1}
           onChange={handleChange}
-      />
-        </div>
+          page={page}
+        />
+      </div>
     </div>
   );
 };

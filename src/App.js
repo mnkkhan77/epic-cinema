@@ -26,6 +26,14 @@ function App() {
         }
       />
       <Route
+        path="/trending"
+        element={
+          <Layout>
+            <Home />
+          </Layout>
+        }
+      />
+      <Route
         path="/about"
         element={
           <Layout>
