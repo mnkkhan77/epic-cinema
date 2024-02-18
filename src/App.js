@@ -122,6 +122,7 @@ function App() {
           </Layout>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
