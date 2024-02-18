@@ -21,7 +21,7 @@ const HoverCardMedia = styled(CardMedia)({
   transition: "filter 0.3s",
   "&:hover": {
     "& img": {
-      filter: "brightness(40%)", // Apply filter only to the image
+      filter: "brightness(40%)",
     },
   },
 });

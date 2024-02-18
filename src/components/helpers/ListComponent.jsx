@@ -9,7 +9,6 @@ const commonStyles = {
   paddingBlockEnd: "30px",
   backgroundColor: "#111b21",
 };
-//0b202a
 
 const IMG_API = process.env.REACT_APP_IMG_API;
 
@@ -28,11 +27,7 @@ const ListComponent = ({ data, isError }) => {
                 title={item.title || item.name}
                 description={item.overview}
                 imageUrl={
-                  item.backdrop_path
-                    ? `${IMG_API}${item.backdrop_path}`
-                    : // : item.poster_path
-                      // ? `${IMG_API}${item.poster_path}`
-                      null
+                  item.backdrop_path ? `${IMG_API}${item.backdrop_path}` : null
                 }
                 media_type={item.media_type}
               />

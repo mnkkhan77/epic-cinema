@@ -216,7 +216,7 @@ const DescriptionPage = () => {
                         lineHeight: "40px",
                         fontWeight: "bold",
                         color: "#e9edef",
-                        marginRight: "10px", // Adjust spacing between the two divs
+                        marginRight: "10px",
                       }}
                     >
                       {detail?.title || detail?.name}

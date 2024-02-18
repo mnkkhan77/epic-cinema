@@ -128,7 +128,6 @@ export default function Navbar() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-
       {isSearchBarOPen ? (
         <AppBar
           position="fixed"
@@ -181,34 +180,6 @@ export default function Navbar() {
         </AppBar>
       ) : (
         <>
-          <AppBar position="fixed" open={open}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{ mr: 2, ...(open && { display: "none" }) }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Link
-                to="/"
-                style={{
-                  textDecoration: "none",
-                }}
-              >
-                <Typography
-                  variant="h6"
-                  noWrap
-                  component="div"
-                  sx={{ color: "#aaa" }}
-                >
-                  Epic Cinema
-                </Typography>
-              </Link>
-            </Toolbar>
-          </AppBar>
           <AppBar position="fixed" open={open}>
             <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -320,10 +291,9 @@ export default function Navbar() {
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
-              // zIndex: 1200, // Ensure it's above the drawer
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
             }}
-            onClick={handleDrawerClose} // Close drawer when overlay is clicked
+            onClick={handleDrawerClose}
           />
         )}
 

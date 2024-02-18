@@ -13,11 +13,11 @@ const renderMatrix = (canvas, color) => {
   const alphabet = katakana + latin + nums;
 
   const fontSize = 16;
-  const minColumns = 20; // minimum number of columns
-  const maxColumns = 100; // maximum number of columns
+  const minColumns = 20;
+  const maxColumns = 100;
   let columns = Math.floor(canvas.width / fontSize);
-  columns = Math.max(columns, minColumns); // at least minColumns
-  columns = Math.min(columns, maxColumns); // at most maxColumns
+  columns = Math.max(columns, minColumns);
+  columns = Math.min(columns, maxColumns);
 
   const rainDrops = [];
 
@@ -26,14 +26,13 @@ const renderMatrix = (canvas, color) => {
   }
 
   const render = () => {
-    context.fillStyle = "rgba(0, 0, 0, 0.05)"; // black w a tiny bit of alpha
+    context.fillStyle = "rgba(0, 0, 0, 0.05)";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     context.fillStyle = color ? color : "#0F0";
     context.font = fontSize + "px monospace";
 
     for (let i = 0; i < rainDrops.length; i++) {
-      // randomize the string of characters to render
       const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
       context.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 

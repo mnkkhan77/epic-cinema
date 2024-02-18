@@ -8,7 +8,6 @@ export default function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //
   };
 
   return (
