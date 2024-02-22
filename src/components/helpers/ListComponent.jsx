@@ -29,7 +29,8 @@ const ListComponent = ({ data, isError }) => {
                 imageUrl={
                   item.backdrop_path ? `${IMG_API}${item.backdrop_path}` : null
                 }
-                media_type={item.media_type}
+                // the top rated response data doesn't have a media_type property so I assumed the default to be movie
+                media_type={item.media_type || "movie"}
               />
             </Grid>
           ))}
