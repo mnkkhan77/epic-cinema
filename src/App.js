@@ -10,9 +10,10 @@ import DescriptionPage from "./Pages/top/DescriptionPage";
 import Reset from "./Pages/auth/Reset";
 import Movie from "./Pages/top/Movie";
 import Tv from "./Pages/top/Tv";
-import { TopRatedProvider } from "./components/Provider/DataProvider";
+// import { TopRatedProvider } from "./components/Provider/DataProvider";
 import SearchResult from "./Pages/top/SearchResult";
 import NotFound from "./Pages/public/NotFound";
+import TopIMDB from "./Pages/top/TopIMDB";
 
 function App() {
   return (
@@ -53,7 +54,9 @@ function App() {
         path="/toprated"
         element={
           <Layout>
-            <TopRatedProvider />
+            {/* <TopRatedProvider /> */}
+            {/* you were passing the wrong component here */}
+            <TopIMDB />
           </Layout>
         }
       />
