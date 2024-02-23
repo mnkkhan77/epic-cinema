@@ -29,7 +29,7 @@ const ListComponent = ({ data, isError }) => {
                 imageUrl={
                   item.backdrop_path ? `${IMG_API}${item.backdrop_path}` : null
                 }
-                media_type={item.media_type}
+                media_type={item.media_type || "movie"}
               />
             </Grid>
           ))}

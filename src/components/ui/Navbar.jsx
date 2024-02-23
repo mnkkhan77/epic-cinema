@@ -29,6 +29,7 @@ import { useState } from "react";
 import Logo from "../../logo123.jpg";
 import { useMediaQuery } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
+import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 
 const drawerWidth = 320;
 
@@ -310,11 +311,11 @@ export default function Navbar() {
         <List>
           {[
             { text: "Home", icon: <HomeIcon />, path: "/" },
-            // {
-            //   text: "Top Rated IMDB",
-            //   icon: <MovieFilterIcon />,
-            //   path: "/toprated",
-            // },
+            {
+              text: "Top Rated IMDB",
+              icon: <MovieFilterIcon />,
+              path: "/toprated",
+            },
             { text: "Movies", icon: <MovieIcon />, path: "/movie" },
             { text: "TV Shows", icon: <TvIcon />, path: "/tv" },
           ].map(({ text, icon, path }, index) => (

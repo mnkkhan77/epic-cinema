@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import NotFoundImage from "../../asset/Baki_Hanma.webp";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const NotFound = () => {
           <div style={{ float: "left", width: "50%", height: "auto" }}>
             <img
               id="photo"
-              src="https://vignette.wikia.nocookie.net/liberproeliis/images/6/68/Baki_Hanma.png/revision/latest?cb=20171229220507&path-prefix=pt-br"
+              src={NotFoundImage}
               alt="Not Found"
               style={{
                 width: "75%",
