@@ -3,3 +3,4 @@
 ![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/402bd5d8-8db2-485d-89ca-459c3d3152d1)
 ![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/fa0b88b3-1e5d-4708-ae43-52788c0c9917)
 ![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/fd1ed1a2-6b8c-4814-9888-68a2ffa57528)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/32117f19-d868-4961-b2cd-04104b913f16)
