@@ -1,1 +1,5 @@
-![image](https://github.com/mnkkhan/epic-cinema/assets/37503821/1c5f1fc2-cc56-44dc-ab0c-b297f62a0072)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/252155b0-41ca-4ee1-933b-35f5818ef003)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/f4a5d4ea-be8b-4d3c-8d05-f14edb2043c4)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/402bd5d8-8db2-485d-89ca-459c3d3152d1)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/fa0b88b3-1e5d-4708-ae43-52788c0c9917)
+![image](https://github.com/mnkkhan77/epic-cinema/assets/37503821/fd1ed1a2-6b8c-4814-9888-68a2ffa57528)
